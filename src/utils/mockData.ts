@@ -1,0 +1,403 @@
+import { IGroceryList, IRecipe } from "../types";
+
+export const groceriesData: IGroceryList[] = [
+  {
+    id: 1,
+    ownerId: 1,
+    title: "Me and Amy",
+    ingredients: [
+    {
+      name: "Chicken",
+      amount: 2,
+      unit: "breasts",
+    },
+    {
+      name: "Pasta",
+      amount: 8,
+      unit: "oz",
+    },
+    {
+      name: "Cream",
+      amount: 1,
+      unit: "cup",
+    },
+    {
+      name: "Butter",
+      amount: 2,
+      unit: "tbsp",
+    },
+    {
+      name: "Parmesan cheese",
+      amount: 0.5,
+      unit: "cup",
+    },
+  ],
+    color: "bg-red-400",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+  id: 2,
+  ownerId: 2,
+  title: "DAB",
+  ingredients: [
+    {
+      name: "Thai curry paste",
+      amount: null,
+      unit: null,
+    },
+    {
+      name: "Coconut milk",
+      amount: 1,
+      unit: "can",
+    },
+    {
+      name: "Mixed vegetables",
+      amount: null,
+      unit: null,
+    },
+    {
+      name: "Salt",
+      amount: null,
+      unit: null,
+    },
+    {
+      name: "Sugar",
+      amount: null,
+      unit: null,
+    },
+    {
+      name: "Lime juice",
+      amount: null,
+      unit: null,
+    },
+  ],
+  color: "bg-blue-400",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+}
+]
+
+export const recipeData: IRecipe[] = [
+    {
+      id: 1,
+      ownerId: 1,
+      title: "Creamy Chicken Alfredo",
+      serves: 4,
+      cookingTime: 30,
+      cost: 15,
+      favourite: true,
+    instructions: [
+      "Cook the pasta according to package instructions",
+      "In a separate pan, cook the chicken until golden brown",
+      "Prepare the Alfredo sauce by mixing cream, butter, and Parmesan cheese",
+      "Combine the cooked pasta, chicken, and sauce",
+      "Serve hot and enjoy!",
+    ],
+    ingredients: [
+      {
+        name: "Chicken",
+        amount: 2,
+        unit: "breasts",
+      },
+      {
+        name: "Pasta",
+        amount: 8,
+        unit: "oz",
+      },
+      {
+        name: "Cream",
+        amount: 1,
+        unit: "cup",
+      },
+      {
+        name: "Butter",
+        amount: 2,
+        unit: "tbsp",
+      },
+      {
+        name: "Parmesan cheese",
+        amount: 0.5,
+        unit: "cup",
+      },
+    ],
+      color: "bg-red-400",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 2,
+      ownerId: 2,
+      title: "Spicy Thai Curry",
+      serves: 3,
+      favourite: false,
+      instructions: [
+        "Heat oil in a pan and sauté onions and garlic",
+        "Add Thai curry paste and stir well",
+        "Add coconut milk and bring to a simmer",
+        "Add vegetables and cook until tender",
+        "Season with salt, sugar, and lime juice",
+        "Serve hot with steamed rice",
+      ],
+      ingredients: [
+        {
+          name: "Thai curry paste",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Coconut milk",
+          amount: 1,
+          unit: "can",
+        },
+        {
+          name: "Mixed vegetables",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Salt",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Sugar",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Lime juice",
+          amount: null,
+          unit: null,
+        },
+      ],
+      color: "bg-blue-400",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 3,
+      ownerId: 3,
+      title: "Baked Salmon with Lemon Butter",
+      serves: 2,
+      cookingTime: 45,
+      cost: 20,
+      favourite: true,
+      instructions: [
+        "Preheat the oven to 375°F",
+        "Place the salmon fillets on a baking sheet",
+        "Season with salt, pepper, and lemon zest",
+        "Bake for 20 minutes or until cooked through",
+        "Meanwhile, melt butter in a small saucepan",
+        "Stir in lemon juice and chopped parsley",
+        "Pour the lemon butter sauce over the baked salmon",
+        "Serve hot with your choice of sides",
+      ],
+      ingredients: [
+        {
+          name: "Salmon fillets",
+          amount: 2,
+          unit: null,
+        },
+        {
+          name: "Salt",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Pepper",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Lemon zest",
+          amount: null,
+          unit: null,
+        },
+        {
+          name: "Butter",
+          amount: 1,
+          unit: "tbsp",
+        },
+        {
+          name: "Lemon juice",
+          amount: 1,
+          unit: "tbsp",
+        },
+        {
+          name: "Parsley",
+          amount: null,
+          unit: "chopped",
+        },
+      ],
+      color: "bg-green-400",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 4,
+      ownerId: 4,
+      title: "Mushroom Risotto",
+      serves: 6,
+      cookingTime: 40,
+      cost: 12,
+      favourite: false,
+      instructions: [
+        "In a large saucepan, heat olive oil over medium heat",
+        "Add diced onions and sauté until translucent",
+        "Add sliced mushrooms and cook until they release their moisture",
+        "Stir in Arborio rice and coat with the oil",
+        "Pour in white wine and cook until absorbed",
+        "Gradually add vegetable broth, stirring frequently",
+        "Cook until the rice is tender and creamy",
+        "Stir in grated Parmesan cheese and chopped parsley",
+        "Season with salt and pepper to taste",
+        "Serve hot and garnish with additional Parmesan and parsley",
+      ],
+      ingredients: [
+        {
+          name: "Olive oil",
+          amount: 2,
+          unit: "tbsp",
+        },
+        {
+          name: "Onion",
+          amount: 1,
+          unit: "medium, diced",
+        },
+        {
+          name: "Mushrooms",
+          amount: 8,
+          unit: "oz, sliced",
+        },
+        {
+          name: "Arborio rice",
+          amount: 1,
+          unit: "cup",
+        },
+        {
+          name: "White wine",
+          amount: 1/2,
+          unit: "cup",
+        },
+        {
+          name: "Vegetable broth",
+          amount: 4,
+          unit: "cups",
+        },
+        {
+          name: "Parmesan cheese",
+          amount: 1/2,
+          unit: "cup, grated",
+        },
+        {
+          name: "Parsley",
+          amount: null,
+          unit: "chopped",
+        },
+        {
+          name: "Salt",
+          amount: null,
+          unit: "to taste",
+        },
+        {
+          name: "Pepper",
+          amount: null,
+          unit: "to taste",
+        },
+      ],
+      color: "bg-yellow-400",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 5,
+      ownerId: 5,
+      title: "Classic Beef Stroganoff",
+      serves: 5,
+      favourite: true,
+      instructions: [
+        "Heat oil in a large skillet over medium-high heat",
+        "Add sliced onions and cook until softened",
+        "Add sliced beef and cook until browned",
+        "Stir in minced garlic and cook for another minute",
+        "Sprinkle flour over the mixture and stir well",
+        "Pour in beef broth and Worcestershire sauce",
+        "Add sliced mushrooms and simmer until the sauce thickens",
+        "Stir in sour cream and heat through without boiling",
+        "Season with salt and pepper to taste",
+        "Serve over cooked egg noodles or rice",
+        "Garnish with chopped parsley, if desired",
+      ],
+      ingredients: [
+        {
+          name: "Oil",
+          amount: 1,
+          unit: "tbsp",
+        },
+        {
+          name: "Onion",
+          amount: 1,
+          unit: "large, sliced",
+        },
+        {
+          name: "Beef",
+          amount: 1,
+          unit: "lb, sliced",
+        },
+        {
+          name: "Garlic",
+          amount: 2,
+          unit: "cloves, minced",
+        },
+        {
+          name: "Flour",
+          amount: 2,
+          unit: "tbsp",
+        },
+        {
+          name: "Beef broth",
+          amount: 1,
+          unit: "cup",
+        },
+        {
+          name: "Worcestershire sauce",
+          amount: 2,
+          unit: "tbsp",
+        },
+        {
+          name: "Mushrooms",
+          amount: 8,
+          unit: "oz, sliced",
+        },
+        {
+          name: "Sour cream",
+          amount: 1/2,
+          unit: "cup",
+        },
+        {
+          name: "Salt",
+          amount: null,
+          unit: "to taste",
+        },
+        {
+          name: "Pepper",
+          amount: null,
+          unit: "to taste",
+        },
+        {
+          name: "Egg noodles or rice",
+          amount: null,
+          unit: "cooked",
+        },
+        {
+          name: "Parsley",
+          amount: null,
+          unit: "chopped, for garnish",
+        },
+      ],
+      color: "bg-purple-400",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
