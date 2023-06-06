@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Kalam";
+  src: url("./assets/fonts/Kalam/Kalam-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+body {
+  font-family: Kalam;
+}
+
+.selected::before {
+  content: "~~~~~~~~~~~~";
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: Times New Roman, Serif;
+  color: black;
+  width: 100%;
+  position: absolute;
+  top: 1rem;
+  left: -1px;
+  overflow: hidden;
+}
