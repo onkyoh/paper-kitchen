@@ -1,17 +1,20 @@
 import { useState } from "react";
 import Button from "../Elements/Button";
 import Modal from "../Elements/Modal";
-import Screen from "./Screen";
+import GroceryScreen from "../../features/recipes/screens/GroceryScreen";
+import RecipeScreen from "../../features/recipes/screens/RecipeScreen";
+import NewCardForm from "../../features/recipes/components/NewCardForm";
 
 const Main = () => {
   const [screen, setScreen] = useState("Recipes");
   const [filtering, setFiltering] = useState(false);
+  const [creatingNew, setCreatingNew] = useState(false);
 
   const navList = ["Recipes", "Groceries"];
 
   return (
-    <main className="flex h-screen flex-col">
-      <nav className="flex h-16 items-center justify-between border-b-2 border-dashed border-black px-4">
+    <main>
+      <nav className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-dashed border-black bg-white p-4">
         <span className="hidden font-bold md:block md:flex-1">
           PaperKitchen
         </span>
@@ -19,6 +22,7 @@ const Main = () => {
         <div className="flex flex-1 items-center justify-center gap-4">
           {navList.map((value) => (
             <button
+              key={value}
               onClick={() => setScreen(value)}
               aria-label={value}
               className={`${screen === value ? "selected" : ""} relative`}
@@ -28,7 +32,7 @@ const Main = () => {
           ))}
         </div>
         <div className="flex flex-1 items-center justify-end gap-4">
-          <Button aria-label="create new">
+          <Button aria-label="create new" onClick={() => setCreatingNew(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -67,16 +71,18 @@ const Main = () => {
           </Button>
         </div>
       </nav>
-      <div className="flex-grow overflow-y-auto bg-gray-200 p-4">
-        <Screen screen={screen} />
+      <div className="relative h-full min-h-screen overflow-y-auto bg-gray-200 px-4 pb-8 pt-20">
+        {screen === "Recipes" ? <RecipeScreen /> : <GroceryScreen />}
       </div>
-      {filtering && (
-        <Modal>
-          <Button onClick={() => setFiltering(false)} aria-label="close">
-            Close
-          </Button>
-        </Modal>
-      )}
+
+      <Modal isOpen={creatingNew}>
+        <NewCardForm screen={screen} />
+        <Button onClick={() => setCreatingNew(false)}>Close</Button>
+      </Modal>
+
+      <Modal isOpen={filtering}>
+        <Button onClick={() => setFiltering(false)}>Close</Button>
+      </Modal>
     </main>
   );
 };

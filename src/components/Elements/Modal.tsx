@@ -1,15 +1,23 @@
+import React from "react";
+
 interface IModalProps {
+  isOpen: boolean;
   children: React.ReactNode;
 }
 
-const Modal = ({ children }: IModalProps) => {
+const Modal = ({ isOpen, children }: IModalProps) => {
   return (
-    <div
-      className="fixed inset-0 z-10 m-auto flex h-1/2 w-72 flex-col items-center border-2 border-black bg-slate-200 p-2"
-      style={{ boxShadow: "0 0 100vmax 100vmax rgba(0,0,0,0.3)" }}
-    >
-      {children}
-    </div>
+    <>
+      {isOpen && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50" />
+
+          <div className="fixed z-20 flex h-fit w-72 flex-col items-center border-2 border-black bg-white p-2 shadow-md">
+            {children}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
