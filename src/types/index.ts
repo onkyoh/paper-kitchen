@@ -10,6 +10,7 @@ export interface IRecipe {
   favourite: boolean;
   color: string;
   type: "recipe";
+  ingredientsQuery?: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,4 +43,15 @@ export type TagField = "serves" | "cookingTime" | "cost" | "favourite";
 export interface IUser {
   id: number;
   name: string;
+  username: string;
+}
+
+export interface ICreateCard {
+  title: string;
+  color: string;
+}
+
+export interface IInfiniteRecipeQuery {
+  pages: IRecipe[];
+  pageParams: unknown;
 }

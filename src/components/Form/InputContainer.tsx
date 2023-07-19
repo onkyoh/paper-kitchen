@@ -7,7 +7,9 @@ interface IInputContainerProps {
 const InputContainer = ({ id, label, children }: IInputContainerProps) => {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="capitalize">
+        {label}
+      </label>
       {children}
     </>
   );

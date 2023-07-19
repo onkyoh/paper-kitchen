@@ -1,23 +1,14 @@
-import Main from "./components/Layout/Main";
-import { createContext } from "react";
-import { IUser } from "./types";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-export const UserContext = createContext<IUser | null>(null);
-
-const queryClient = new QueryClient();
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/lib/react-query";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
 
 function App() {
-  const user = {
-    id: 5,
-    name: "Adnan",
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
-      <UserContext.Provider value={user}>
-        <Main />
-      </UserContext.Provider>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
