@@ -1,17 +1,16 @@
 import { create } from "zustand";
+import { IUser } from "@/types";
 
 interface AuthStore {
-  user: {
-    id: number;
-  } | null;
-  logout: () => void;
+  user: IUser | null;
+  setUser: (user: IUser | null) => void;
 }
 
 const useAuthStore = create<AuthStore>((set) => ({
-  user: {
-    id: 1,
+  user: null,
+  setUser: (user) => {
+    set({ user });
   },
-  logout: () => set({ user: null }),
 }));
 
 export default useAuthStore;

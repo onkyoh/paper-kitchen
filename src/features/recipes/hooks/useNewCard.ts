@@ -11,17 +11,14 @@ const useNewCard = () => {
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value.length > 30) return;
     setNewCard({ ...newCard, title: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-  }
   return {
     newCard,
     handleSelectColor,
     handleChange,
-    handleSubmit,
   };
 };
 

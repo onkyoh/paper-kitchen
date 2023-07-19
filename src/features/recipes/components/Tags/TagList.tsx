@@ -14,13 +14,11 @@ const TagList = ({ card }: ITagListProps) => {
     <ul className="flex flex-wrap gap-2">
       {user?.id === card.ownerId && <Tag field="owner" />}
       {card.favourite && <Tag field="favourite" />}
-      {TAG_FIELDS.filter((field) => card[field] && field !== "favourite").map(
-        (field) => (
-          <Tag field={field} key={field}>
-            {<span>{card[field]}</span>}
-          </Tag>
-        )
-      )}
+      {TAG_FIELDS.filter((field) => card[field]).map((field) => (
+        <Tag field={field} key={field}>
+          {<span>{card[field]}</span>}
+        </Tag>
+      ))}
     </ul>
   );
 };

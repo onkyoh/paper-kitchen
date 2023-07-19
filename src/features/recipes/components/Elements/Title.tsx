@@ -1,7 +1,7 @@
 import React from "react";
-import useCardStore from "../stores/useCardStore";
-import Header from "./Elements/Header";
-import Input from "../../../components/Form/Input";
+import useCardStore from "../../stores/useCardStore";
+import Header from "../../../../components/Elements/Header";
+import Input from "@/components/Form/Input";
 
 interface ITitleProps {
   editMode: boolean;
@@ -12,6 +12,7 @@ const Title = ({ editMode, title }: ITitleProps) => {
   const updateCard = useCardStore((state) => state.updateCard);
 
   function handleChangeTitle(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value.length > 30) return;
     updateCard({
       title: e.target.value,
     });
@@ -20,7 +21,12 @@ const Title = ({ editMode, title }: ITitleProps) => {
   return (
     <Header>
       {editMode ? (
-        <Input type="text" onChange={handleChangeTitle} value={title} />
+        <Input
+          type="text"
+          onChange={handleChangeTitle}
+          value={title}
+          className="w-72"
+        />
       ) : (
         <>{title}</>
       )}

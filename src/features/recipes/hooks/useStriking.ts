@@ -1,24 +1,25 @@
-import {useState} from 'react'
+import { useCallback, useState } from "react";
 
 const useStriking = () => {
+  const [strikedArray, setStrikedArray] = useState<string[]>([]);
 
-    const [strikedArray, setStrikedArray] = useState<string[]>([]);
-
-    function handleStrike(text: string) {
-      const idx = strikedArray.indexOf(text);
+  const handleStrike = useCallback((text: string) => {
+    setStrikedArray((prevStrikedArray) => {
+      const idx = prevStrikedArray.indexOf(text);
       if (idx >= 0) {
-        let tempStriked = [...strikedArray];
+        let tempStriked = [...prevStrikedArray];
         tempStriked.splice(idx, 1);
-        setStrikedArray([...tempStriked]);
+        return [...tempStriked];
       } else {
-        setStrikedArray([...strikedArray, text]);
+        return [...prevStrikedArray, text];
       }
-    }
+    });
+  }, []);
 
-    return {
-        strikedArray,
-        handleStrike
-    }
-}
+  return {
+    strikedArray,
+    handleStrike,
+  };
+};
 
-export default useStriking
+export default useStriking;

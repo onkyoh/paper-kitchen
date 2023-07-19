@@ -11,12 +11,16 @@ interface IIngredientListProps {
 
 interface IIngredientItemProps {
   ingredient: IIngredient;
+  isStriked: boolean;
+  handleStrike: (id: string) => void;
 }
 
 export default function IngredientList({
   ingredients,
   editMode,
 }: IIngredientListProps) {
+  const { strikedArray, handleStrike } = useStriking();
+
   const { newIngredient, handleChange, handleAdd, handleDelete } =
     useIngredients();
 
@@ -34,7 +38,12 @@ export default function IngredientList({
             </ListButton>
           </IngredientInputContainer>
         ) : (
-          <IngredientItem ingredient={ingredient} key={ingredient.id} />
+          <IngredientItem
+            ingredient={ingredient}
+            key={ingredient.id}
+            isStriked={strikedArray.includes(ingredient.id)}
+            handleStrike={handleStrike}
+          />
         )
       )}
       {editMode && (
@@ -49,15 +58,16 @@ export default function IngredientList({
   );
 }
 
-function IngredientItem({ ingredient }: IIngredientItemProps) {
-  const { strikedArray, handleStrike } = useStriking();
+function IngredientItem({
+  ingredient,
+  isStriked,
+  handleStrike,
+}: IIngredientItemProps) {
   return (
     <li>
       <p
-        onClick={() => handleStrike(ingredient.name)}
-        className={`w-10/12  ${
-          strikedArray.includes(ingredient.name) && "line-through"
-        }`}
+        onClick={() => handleStrike(ingredient.id)}
+        className={`w-10/12  ${isStriked && "line-through"}`}
       >
         {ingredient.amount} {ingredient.unit}
         {(ingredient.amount || ingredient.unit) && ` - `}

@@ -41,7 +41,7 @@ export default function InstructionsList({
         ) : (
           <li
             key={instruction.id}
-            className={`indent-2 ${
+            className={` ${
               strikedArray.includes(instruction.id) && "line-through"
             }`}
             onClick={() => handleStrike(instruction.id)}

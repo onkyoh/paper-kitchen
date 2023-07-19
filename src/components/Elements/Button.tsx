@@ -5,9 +5,15 @@ interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-const Button = ({ children, onClick, ...rest }: IButtonProps) => {
+const Button = ({ children, className, ...rest }: IButtonProps) => {
   return (
-    <button onClick={onClick} {...rest}>
+    <button
+      className={`flex h-8 w-8 items-center justify-center border-dashed
+      hover:border-2 hover:border-solid hover:border-black hover:backdrop-brightness-90 
+      disabled:cursor-not-allowed disabled:opacity-50 
+      ${className}`}
+      {...rest}
+    >
       {children}
     </button>
   );

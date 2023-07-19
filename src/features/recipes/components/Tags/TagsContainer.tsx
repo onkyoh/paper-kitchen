@@ -5,6 +5,7 @@ import useTags from "../../hooks/useTags";
 
 import { TAG_FIELDS } from "../../utils/constants";
 import { IRecipe } from "../../../../types";
+import Checkbox from "@/components/Form/Checkbox";
 
 interface ITitleContainerProps {
   card: IRecipe;
@@ -21,12 +22,18 @@ const TagsContainer = ({ editMode, card }: ITitleContainerProps) => {
       ) : (
         <>
           <ul className="flex gap-2">
+            <Tag field="favourite" key="favourite">
+              <Checkbox
+                handleChange={handleToggle}
+                name="favourite"
+                isChecked={card.favourite}
+                className="h-8 w-8"
+              />
+            </Tag>
             {TAG_FIELDS.map((field) => (
               <Tag field={field} key={field}>
                 <TagInput
-                  isBoolean={typeof card[field] === "boolean"}
                   handleChange={handleChange}
-                  handleToggle={handleToggle}
                   value={card[field]}
                   field={field}
                 />
