@@ -8,6 +8,7 @@ export interface ModalState {
     delete: boolean;
     logout: boolean;
     leave: boolean;
+    transcript: boolean;
   };
   toggleOpen: (field: keyof ModalState["isOpen"]) => void;
   resetModals: () => void;
@@ -20,6 +21,7 @@ const initState = {
   delete: false,
   logout: false,
   leave: false,
+  transcript: false,
 };
 
 const useModalStore = create<ModalState>((set) => ({

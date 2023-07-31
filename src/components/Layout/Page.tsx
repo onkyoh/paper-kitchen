@@ -1,9 +1,9 @@
 import { MouseEventHandler, useState } from "react";
-import useNavStore from "@/stores/useModalStore";
 import Button from "../Elements/Button";
 import OptionsItem from "../Options/OptionsItem";
 import OptionsButton from "../Options/OptionsButton";
 import OptionsList from "../Options/OptionsList";
+import useNavStore from "@/stores/useModalStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
 interface IProps {
@@ -36,12 +36,14 @@ const Page = ({
   return (
     <div className={`fixed inset-0 z-10 h-full w-full ${color}`}>
       <header className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-black bg-inherit p-4">
-        <Button onClick={back}>&#8592;</Button>
+        <Button onClick={back} aria-label="back">
+          &#8592;
+        </Button>
         <div className="flex gap-4">
           {shareLoading ? (
             <Button>...</Button>
           ) : (
-            <Button onClick={shareFn}>
+            <Button onClick={shareFn} aria-label="share">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -59,7 +61,7 @@ const Page = ({
             </Button>
           )}
           {isChanged ? (
-            <Button onClick={updateFn}>
+            <Button onClick={updateFn} aria-label="save changes">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="28px"
@@ -72,7 +74,7 @@ const Page = ({
               </svg>
             </Button>
           ) : (
-            <Button onClick={toggleEditMode}>
+            <Button onClick={toggleEditMode} aria-label="edit mode">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -92,6 +94,7 @@ const Page = ({
           <OptionsButton
             isOpen={optionsOpen}
             toggleOpen={() => setOptionsOpen(!optionsOpen)}
+            screen="page"
           />
         </div>
         {optionsOpen && (
@@ -117,6 +120,7 @@ const Page = ({
               </svg>
               Permissions
             </OptionsItem>
+
             <OptionsItem
               onClick={() => toggleOpen("leave")}
               key="leave"

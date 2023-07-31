@@ -9,6 +9,7 @@ interface IInstructionInputProps {
   instruction: IInstruction;
   onChange: (e: ChangeEvent<HTMLInputElement>, index?: number) => void;
   placeholder?: string;
+  name: string;
 }
 
 interface IInstructionListProps {
@@ -33,8 +34,12 @@ export default function InstructionsList({
             <InstructionInput
               instruction={instruction}
               onChange={handleChange}
+              name="instruction"
             />
-            <ListButton onClick={() => handleDelete(instruction.id)}>
+            <ListButton
+              onClick={() => handleDelete(instruction.id)}
+              aria-label="delete instruction"
+            >
               X
             </ListButton>
           </li>
@@ -56,8 +61,11 @@ export default function InstructionsList({
             instruction={newInstruction}
             onChange={handleChange}
             placeholder="new instruction..."
+            name="new instruction"
           />
-          <ListButton onClick={handleAdd}>+</ListButton>
+          <ListButton onClick={handleAdd} aria-label="add instruction">
+            +
+          </ListButton>
         </li>
       )}
     </ol>
@@ -68,6 +76,7 @@ const InstructionInput = ({
   instruction,
   onChange,
   placeholder,
+  name,
 }: IInstructionInputProps) => {
   return (
     <Input
@@ -76,6 +85,7 @@ const InstructionInput = ({
       id={instruction.id}
       value={instruction.text || ""}
       placeholder={placeholder}
+      name={name}
       className="flex-grow"
     />
   );

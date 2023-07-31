@@ -99,9 +99,11 @@ const GroceryLists = () => {
         />
       </Modal>
 
+      {/* modals activated within page header */}
+
       {card && (
         <>
-          <Modal modal={"delete"} isLoading={deleteGroceryList.isLoading}>
+          <Modal modal="delete" isLoading={deleteGroceryList.isLoading}>
             <DeleteCard
               cardTitle={card.title}
               cardType="grocery list"
@@ -109,11 +111,11 @@ const GroceryLists = () => {
             />
           </Modal>
 
-          <Modal modal={"permissions"}>
+          <Modal modal="permissions">
             <Permissions id={card.id} path={"grocery-lists"} />
           </Modal>
 
-          <Modal modal={"leave"}>
+          <Modal modal="leave">
             <LeaveForm
               cardTitle={card.title}
               cardType="recipe"
