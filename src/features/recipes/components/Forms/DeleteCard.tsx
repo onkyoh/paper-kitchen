@@ -38,11 +38,13 @@ const DeleteCard = ({ cardType, submitFn, cardTitle }: IDeleteCardProps) => {
         value={confirmInput}
         placeholder={cardTitle}
         onChange={handleChange}
+        aria-label="delete input"
       />
 
       <Button
         className="w-full border-2 border-black bg-red-400"
         disabled={confirmInput !== cardTitle}
+        aria-label="submit delete"
       >
         Delete
       </Button>

@@ -9,14 +9,11 @@ interface IFilterFormProps {
   submitFn: (newFilter: FilterParams) => void;
 }
 
-interface IFilterSelectInputProps {
+interface IFilterRangeInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  name: string;
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  min: string;
-  max: string;
 }
 
 const FilterForm = ({ submitFn }: IFilterFormProps) => {
@@ -110,6 +107,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
             value={newIngredient}
             onChange={handleChangeIngredient}
             placeholder="apple "
+            aria-label="ingredient filter input"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 addIngredient();
@@ -120,11 +118,12 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
             type="button"
             onClick={addIngredient}
             disabled={!newIngredient}
+            aria-label="add ingredient filter"
           >
             +
           </Button>
         </div>
-        <p className="text-gray text-sm">
+        <p className="text-sm text-gray-400">
           Ingredients:&nbsp;
           {newFilter.ingredients?.map((ingredient: string) => (
             <span key={ingredient}>{ingredient}, </span>
@@ -135,6 +134,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
       <Button
         className="w-full border-2 border-black bg-blue-400"
         disabled={newFilter == defaultFilter}
+        aria-label="submit filtered search"
       >
         Search
       </Button>
@@ -146,13 +146,10 @@ export default FilterForm;
 
 const FilterInputContainer = ({
   label,
-  id,
-  name,
   value,
-  onChange,
-  min,
-  max,
-}: IFilterSelectInputProps) => {
+  id,
+  ...rest
+}: IFilterRangeInputProps) => {
   return (
     <div className="flex w-full flex-col gap-1">
       <div className="flex justify-between">
@@ -162,12 +159,9 @@ const FilterInputContainer = ({
       <div className="flex gap-1">
         <input
           type="range"
-          onChange={onChange}
           value={value}
-          name={name}
           id={id}
-          min={min}
-          max={max}
+          {...rest}
           className="flex-grow accent-black"
         />
       </div>

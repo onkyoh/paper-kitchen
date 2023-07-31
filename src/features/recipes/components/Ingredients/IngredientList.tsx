@@ -33,7 +33,10 @@ export default function IngredientList({
             ingredient={ingredient}
             handleChange={handleChange}
           >
-            <ListButton onClick={() => handleDelete(ingredient.id)}>
+            <ListButton
+              onClick={() => handleDelete(ingredient.id)}
+              aria-label="delete ingredient"
+            >
               X
             </ListButton>
           </IngredientInputContainer>
@@ -51,7 +54,9 @@ export default function IngredientList({
           handleChange={handleChange}
           ingredient={newIngredient}
         >
-          <ListButton onClick={handleAdd}>+</ListButton>
+          <ListButton onClick={handleAdd} aria-label="add ingredient">
+            +
+          </ListButton>
         </IngredientInputContainer>
       )}
     </ul>

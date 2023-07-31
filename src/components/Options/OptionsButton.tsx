@@ -3,11 +3,12 @@ import Button from "../Elements/Button";
 interface IOptionsButton {
   isOpen: boolean;
   toggleOpen: () => void;
+  screen: "main" | "page";
 }
 
-const OptionsButton = ({ isOpen, toggleOpen }: IOptionsButton) => {
+const OptionsButton = ({ isOpen, toggleOpen, screen }: IOptionsButton) => {
   return isOpen ? (
-    <Button onClick={toggleOpen}>
+    <Button onClick={toggleOpen} aria-label={`close options ${screen}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -24,7 +25,7 @@ const OptionsButton = ({ isOpen, toggleOpen }: IOptionsButton) => {
       </svg>
     </Button>
   ) : (
-    <Button onClick={toggleOpen}>
+    <Button onClick={toggleOpen} aria-label={`open options ${screen}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

@@ -42,6 +42,7 @@ const Main = () => {
           <OptionsButton
             isOpen={optionsOpen}
             toggleOpen={() => setOptionsOpen(!optionsOpen)}
+            screen="main"
           />
         </div>
         {optionsOpen && (

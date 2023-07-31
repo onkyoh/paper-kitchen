@@ -118,6 +118,8 @@ const Recipes = () => {
         <FilterForm submitFn={updateFilter} />
       </Modal>
 
+      {/* modals activated within page header */}
+
       {card && (
         <>
           <Modal modal={"delete"} isLoading={deleteRecipe.isLoading}>

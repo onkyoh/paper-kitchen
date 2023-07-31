@@ -35,6 +35,7 @@ const CreateCard = ({ cardType, submitFn }: ICreateCardProps) => {
       <Button
         className={`w-full border-2 border-black ${newCard.color || "white"}`}
         disabled={!newCard.color || !newCard.title}
+        aria-label="submit create card"
       >
         Create
       </Button>
