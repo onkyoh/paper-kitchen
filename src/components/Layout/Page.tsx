@@ -1,10 +1,11 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler } from "react";
 import Button from "../Elements/Button";
 import OptionsItem from "../Options/OptionsItem";
 import OptionsButton from "../Options/OptionsButton";
 import OptionsList from "../Options/OptionsList";
 import useNavStore from "@/stores/useModalStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
+import useOptions from "@/hooks/useOptions";
 
 interface IProps {
   back: () => void;
@@ -30,14 +31,27 @@ const Page = ({
   shareLoading,
 }: IProps) => {
   const { toggleOpen } = useNavStore();
-  const [optionsOpen, setOptionsOpen] = useState(false);
   const { user } = useAuthStore();
+  const { optionsOpen, toggleOptions, listRef, handleBlur } = useOptions();
 
   return (
     <div className={`fixed inset-0 z-10 h-full w-full ${color}`}>
       <header className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-black bg-inherit p-4">
         <Button onClick={back} aria-label="back">
-          &#8592;
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+            />
+          </svg>
         </Button>
         <div className="flex gap-4">
           {shareLoading ? (
@@ -93,12 +107,16 @@ const Page = ({
           )}
           <OptionsButton
             isOpen={optionsOpen}
-            toggleOpen={() => setOptionsOpen(!optionsOpen)}
+            toggleOpen={toggleOptions}
             screen="page"
           />
         </div>
         {optionsOpen && (
-          <OptionsList closeOptions={() => setOptionsOpen(false)}>
+          <OptionsList
+            closeOptions={toggleOptions}
+            listRef={listRef}
+            handleBlur={handleBlur}
+          >
             <OptionsItem
               onClick={() => toggleOpen("permissions")}
               isHidden={user?.id !== ownerId}

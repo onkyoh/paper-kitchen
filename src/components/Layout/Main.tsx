@@ -6,18 +6,30 @@ import OptionsList from "../Options/OptionsList";
 
 import { Outlet, Link, useLocation } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import useNavStore from "@/stores/useModalStore";
+import useOptions from "@/hooks/useOptions";
 
 const Main = () => {
   const location = useLocation();
   const { toggleOpen } = useNavStore();
-  const [optionsOpen, setOptionsOpen] = useState(false);
+  const { optionsOpen, toggleOptions, handleBlur, listRef } = useOptions();
+  const navigate = useNavigate();
 
   const navList = [
     { label: "Recipes", path: "/recipes" },
     { label: "Groceries", path: "/grocery-lists" },
   ];
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("join-link");
+    if (token) {
+      navigate(`/join/${token}`);
+      sessionStorage.removeItem("join-link");
+    }
+  }, []);
 
   const handleLastVisited = (path: string) => {
     window.localStorage.setItem("last_visited", path);
@@ -46,12 +58,16 @@ const Main = () => {
         <div className="flex flex-1 justify-end">
           <OptionsButton
             isOpen={optionsOpen}
-            toggleOpen={() => setOptionsOpen(!optionsOpen)}
+            toggleOpen={toggleOptions}
             screen="main"
           />
         </div>
         {optionsOpen && (
-          <OptionsList closeOptions={() => setOptionsOpen(false)}>
+          <OptionsList
+            closeOptions={toggleOptions}
+            listRef={listRef}
+            handleBlur={handleBlur}
+          >
             <OptionsItem
               onClick={() => toggleOpen("createNew")}
               key="createNew"
