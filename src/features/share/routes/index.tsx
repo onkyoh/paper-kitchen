@@ -31,7 +31,7 @@ const index = () => {
 
       <RainbowBackground>
         <div className="relative flex w-72 flex-col gap-2 bg-white p-4 outline outline-2 outline-black">
-          {joinInfo.isSuccess ? (
+          {joinInfo.isSuccess && url ? (
             <>
               {!user && (
                 <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-2 backdrop-blur-md">
@@ -40,7 +40,10 @@ const index = () => {
                   </h2>
                   <Link
                     to="/auth/login"
-                    className="selected relative text-center text-lg"
+                    className="relative border-2 border-black bg-cyan-400 px-4 py-2 text-center text-lg"
+                    onClick={() =>
+                      window.sessionStorage.setItem("join-link", url)
+                    }
                   >
                     Go to login
                   </Link>

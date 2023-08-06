@@ -18,19 +18,12 @@ const register = (data: IData): Promise<UserPromise> => {
 
 export const useRegister = () => {
   const { setUser } = useAuthStore();
-  const navigate = useNavigate();
+
   return useMutation({
     onError(error: AxiosError) {
       return error.response?.data || error.message;
     },
     onSuccess: (res) => {
-      const url = sessionStorage.getItem("url");
-      if (url) {
-        sessionStorage.removeItem("url");
-        navigate(`/join/${url}`);
-      } else {
-        navigate("/recipes");
-      }
       setUser(res.data.user);
       storage.setToken(res.data.token);
     },

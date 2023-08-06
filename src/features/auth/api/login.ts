@@ -16,19 +16,12 @@ const login = (data: IData): Promise<UserPromise> => {
 
 export const useLogin = () => {
   const { setUser } = useAuthStore();
-  const navigate = useNavigate();
-  const location = useLocation();
+
   return useMutation({
     onError(error: AxiosError) {
       return error.response?.data || error.message;
     },
     onSuccess: (res) => {
-      const { state } = location;
-      if (state && state.fromJoin) {
-        navigate(state.fromJoin);
-      } else {
-        navigate("/recipes");
-      }
       setUser(res.data.user);
       storage.setToken(res.data.token);
     },
