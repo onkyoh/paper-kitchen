@@ -31,6 +31,22 @@ export default function InstructionsList({
 
   return (
     <ol className="flex list-inside list-decimal flex-col">
+      {editMode && (
+        <>
+          <li className="flex">
+            <InstructionInput
+              instruction={newInstruction}
+              onChange={handleChange}
+              placeholder="new instruction..."
+              name="new instruction"
+            />
+            <ListButton onClick={handleAdd} aria-label="add instruction">
+              +
+            </ListButton>
+          </li>
+          <HorizontalRule />
+        </>
+      )}
       {instructions.map((instruction) =>
         editMode ? (
           <li key={instruction.id} className="flex">
@@ -57,22 +73,6 @@ export default function InstructionsList({
             {instruction.text}
           </li>
         )
-      )}
-      {editMode && (
-        <>
-          <li className="flex">
-            <InstructionInput
-              instruction={newInstruction}
-              onChange={handleChange}
-              placeholder="new instruction..."
-              name="new instruction"
-            />
-            <ListButton onClick={handleAdd} aria-label="add instruction">
-              +
-            </ListButton>
-          </li>
-          <HorizontalRule />
-        </>
       )}
     </ol>
   );
