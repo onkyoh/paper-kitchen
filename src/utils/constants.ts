@@ -9,7 +9,8 @@ export const BACKGROUND_COLORS = [
   "bg-orange-400",
 ];
 
-export const WEBSITE_URL = "http://127.0.0.1:5173";
+export const WEBSITE_URL =
+  import.meta.env.VITE_WEBSITE_URL || "https://paperkitchen.ca";
 
-export const BASE_URL =
-  import.meta.env.VITE_BASE_URL || "https://paperkitchen.adaptable.app/api";
+export const API_URL =
+  import.meta.env.VITE_API_URL || "https://paperkitchen.adaptable.app/api";

@@ -1,17 +1,26 @@
 import Modal from "@/components/Elements/Modal";
 import Button from "@/components/Elements/Button";
-import { useLogout } from "../api/logout";
 import Header from "@/components/Elements/Header";
+import storage from "@/utils/storage";
+import useAuthStore from "../stores/useAuthStore";
+import useModalStore from "@/stores/useModalStore";
 
 const Logout = () => {
-  const logout = useLogout();
+  const { setUser } = useAuthStore();
+  const { toggleOpen } = useModalStore();
+
+  const logout = () => {
+    setUser(null);
+    toggleOpen("logout");
+    storage.clearToken();
+  };
 
   return (
-    <Modal isLoading={logout.isLoading} modal="logout">
+    <Modal modal="logout">
       <Header>Confirm Logout</Header>
       <p>Please confirm that you would like to logout</p>
       <Button
-        onClick={() => logout.mutateAsync()}
+        onClick={logout}
         className="w-full border-2 border-black bg-red-400"
       >
         Logout

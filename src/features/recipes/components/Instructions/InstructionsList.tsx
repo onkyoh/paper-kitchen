@@ -1,9 +1,12 @@
+import ListButton from "../Elements/ListButton";
+import Input from "@/components/Form/Input";
+import HorizontalRule from "@/components/Elements/HorizontalRule";
+
 import useStriking from "../../hooks/useStriking";
+import useInstructions from "../../hooks/useInstructions";
+
 import { IInstruction, IRecipe } from "../../../../types";
 import { ChangeEvent } from "react";
-import ListButton from "../Elements/ListButton";
-import useInstructions from "../../hooks/useInstructions";
-import Input from "../../../../components/Form/Input";
 
 interface IInstructionInputProps {
   instruction: IInstruction;
@@ -56,17 +59,20 @@ export default function InstructionsList({
         )
       )}
       {editMode && (
-        <li className="flex">
-          <InstructionInput
-            instruction={newInstruction}
-            onChange={handleChange}
-            placeholder="new instruction..."
-            name="new instruction"
-          />
-          <ListButton onClick={handleAdd} aria-label="add instruction">
-            +
-          </ListButton>
-        </li>
+        <>
+          <li className="flex">
+            <InstructionInput
+              instruction={newInstruction}
+              onChange={handleChange}
+              placeholder="new instruction..."
+              name="new instruction"
+            />
+            <ListButton onClick={handleAdd} aria-label="add instruction">
+              +
+            </ListButton>
+          </li>
+          <HorizontalRule />
+        </>
       )}
     </ol>
   );

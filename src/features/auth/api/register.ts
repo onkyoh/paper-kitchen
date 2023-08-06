@@ -2,8 +2,9 @@ import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import useAuthStore from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "@/utils/constants";
+import { API_URL } from "@/utils/constants";
 import { UserPromise } from "./getUser";
+import storage from "@/utils/storage";
 
 interface IData {
   name: string;
@@ -12,9 +13,7 @@ interface IData {
 }
 
 const register = (data: IData): Promise<UserPromise> => {
-  return axios.post(`${BASE_URL}/users/register`, data, {
-    withCredentials: true,
-  });
+  return axios.post(`${API_URL}/users/register`, data);
 };
 
 export const useRegister = () => {
@@ -32,7 +31,8 @@ export const useRegister = () => {
       } else {
         navigate("/recipes");
       }
-      setUser(res.data);
+      setUser(res.data.user);
+      storage.setToken(res.data.token);
     },
     mutationFn: register,
   });

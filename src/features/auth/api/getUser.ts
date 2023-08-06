@@ -1,16 +1,16 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { IUser } from "@/types";
-import { BASE_URL } from "@/utils/constants";
+import { axios } from "@/lib/axios";
 
 export interface UserPromise {
-  data: IUser;
+  data: {
+    user: IUser;
+    token: string;
+  };
 }
 
-export const getUser = (): Promise<UserPromise> => {
-  return axios.get(`${BASE_URL}/users`, {
-    withCredentials: true,
-  });
+export const getUser = (): Promise<IUser> => {
+  return axios.get("/users");
 };
 
 export const useAuth = () => {

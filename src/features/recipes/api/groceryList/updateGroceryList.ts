@@ -11,7 +11,7 @@ const updateGroceryList = (data: IGroceryList): Promise<IGroceryList> => {
 
 export const useUpdateGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { turnOffEditMode } = useCardStore();
+  const { turnOffEditMode, selectCard } = useCardStore();
 
   return useMutation({
     onMutate: async (updatingGroceryList: IGroceryList) => {
@@ -41,8 +41,9 @@ export const useUpdateGroceryList = () => {
         );
       }
     },
-    onSuccess: () => {
+    onSuccess: (card) => {
       queryClient.invalidateQueries(["grocery-lists"]);
+      selectCard(card);
       addNotification({
         isError: false,
         message: "Grocery list updated",

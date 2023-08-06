@@ -30,7 +30,7 @@ export default function IngredientInputContainer({
         id={ingredient.id}
         onChange={handleChange}
         className="w-2/12"
-        placeholder="amount"
+        placeholder="amt"
       />
       <IngredientInput
         name="unit"

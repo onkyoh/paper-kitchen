@@ -34,7 +34,7 @@ export function Card({ card }: ICardProps) {
   return (
     <li
       key={card.id}
-      className={`flex h-fit min-h-full cursor-pointer flex-col justify-between gap-2 border-2 border-black p-2 ${card.color}`}
+      className={`flex h-fit cursor-pointer flex-col justify-between gap-2 border-2 border-black p-2 ${card.color}`}
       tabIndex={0}
       onClick={() => selectCard(card)}
     >

@@ -19,6 +19,10 @@ const Main = () => {
     { label: "Groceries", path: "/grocery-lists" },
   ];
 
+  const handleLastVisited = (path: string) => {
+    window.localStorage.setItem("last_visited", path);
+  };
+
   return (
     <main>
       <nav className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-dashed border-black bg-white p-4">
@@ -30,6 +34,7 @@ const Main = () => {
               key={item.path}
               to={item.path}
               aria-label={item.label}
+              onClick={() => handleLastVisited(item.path)}
               className={`${
                 location.pathname === item.path ? "selected" : ""
               } relative`}
