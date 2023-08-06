@@ -62,10 +62,10 @@ const GroceryLists = () => {
             <Title editMode={editMode} title={card.title} />
             {!editMode && (
               <Button
-                onClick={() => {
-                  updateCard({ ingredients: [] });
-                  updateGroceryList.mutateAsync(card);
-                }}
+                onClick={() =>
+                  updateGroceryList.mutateAsync({ ...card, ingredients: [] })
+                }
+                aria-label="clear ingredients"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

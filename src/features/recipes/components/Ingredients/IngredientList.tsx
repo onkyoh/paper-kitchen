@@ -3,6 +3,7 @@ import { IIngredient } from "../../../../types";
 import ListButton from "../Elements/ListButton";
 import useIngredients from "../../hooks/useIngredients";
 import IngredientInputContainer from "./IngredientInputContainer";
+import HorizontalRule from "@/components/Elements/HorizontalRule";
 
 interface IIngredientListProps {
   ingredients: IIngredient[];
@@ -25,7 +26,7 @@ export default function IngredientList({
     useIngredients();
 
   return (
-    <ul className="flex flex-col">
+    <ul className="flex flex-col-reverse">
       {ingredients.map((ingredient) =>
         editMode ? (
           <IngredientInputContainer
@@ -50,14 +51,17 @@ export default function IngredientList({
         )
       )}
       {editMode && (
-        <IngredientInputContainer
-          handleChange={handleChange}
-          ingredient={newIngredient}
-        >
-          <ListButton onClick={handleAdd} aria-label="add ingredient">
-            +
-          </ListButton>
-        </IngredientInputContainer>
+        <>
+          <HorizontalRule />
+          <IngredientInputContainer
+            handleChange={handleChange}
+            ingredient={newIngredient}
+          >
+            <ListButton onClick={handleAdd} aria-label="add ingredient">
+              +
+            </ListButton>
+          </IngredientInputContainer>
+        </>
       )}
     </ul>
   );

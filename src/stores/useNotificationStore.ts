@@ -17,7 +17,7 @@ const useNotificationStore = create<NotificationsStore>((set) => ({
     set({ notification });
     setTimeout(() => {
       set({ notification: null });
-    }, 3000);
+    }, 2000);
   },
   dismissNotification: () => set({ notification: null }),
 }));

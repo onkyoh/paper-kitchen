@@ -33,9 +33,7 @@ import { useLeaveRecipe } from "../api/recipes/leaveRecipe";
 const Recipes = () => {
   const { card, updateCard, back, isChanged, editMode, toggleEditMode } =
     useCardStore();
-
   const { user } = useAuthStore();
-
   const { isOpen, toggleOpen } = useModalStore();
   const { filter, updateFilter } = useFilter();
 

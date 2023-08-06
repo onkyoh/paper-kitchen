@@ -9,7 +9,11 @@ import {
 } from "../../src/test/data-generators";
 
 describe("paperkitchen", () => {
-  it.skip("test auth", () => {
+  beforeEach(() => {
+    cy.clearLocalStorage();
+  });
+
+  it("test auth", () => {
     const user = userGenerator();
 
     //registration
@@ -28,7 +32,7 @@ describe("paperkitchen", () => {
 
     cy.url().should("eq", "http://127.0.0.1:5173/");
 
-    cy.get("button").click();
+    cy.get('button[aria-label="open options main"]').click();
 
     cy.contains("li", /logout/i).click();
 
@@ -43,10 +47,10 @@ describe("paperkitchen", () => {
 
     cy.get("button").click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173");
+    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
   });
 
-  it.skip("tests recipe functionality", () => {
+  it("tests recipe functionality", () => {
     const user = userGenerator();
     const title = titleGenerator();
 
@@ -62,7 +66,7 @@ describe("paperkitchen", () => {
 
     //create new
 
-    cy.get("button").click();
+    cy.get('button[aria-label="open options main"]').click();
 
     cy.contains("li", /create new/i).click();
 
@@ -115,7 +119,7 @@ describe("paperkitchen", () => {
 
     cy.get('button[aria-label="back"]').click();
 
-    cy.get("button").click();
+    cy.get('button[aria-label="open options main"]').click();
 
     cy.contains("li", /filter/i).click();
 
@@ -148,7 +152,6 @@ describe("paperkitchen", () => {
 
   it("tests share link functionaliy", () => {
     const user = userGenerator();
-    const guest = userGenerator();
     const title = titleGenerator();
 
     cy.visit("http://127.0.0.1:5173/auth/register");
@@ -161,7 +164,7 @@ describe("paperkitchen", () => {
 
     cy.url().should("eq", "http://127.0.0.1:5173/recipes");
 
-    cy.get("button").click();
+    cy.get('button[aria-label="open options main"]').click();
 
     cy.contains("li", /create new/i).click();
 

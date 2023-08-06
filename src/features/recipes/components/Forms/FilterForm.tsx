@@ -1,9 +1,12 @@
 import Button from "@/components/Elements/Button";
-import { FilterParams } from "../../api/recipes/getRecipes";
 import Input from "@/components/Form/Input";
 import Checkbox from "@/components/Form/Checkbox";
-import useFilterForm from "../../hooks/useFilterForm";
 import Form from "@/components/Form/Form";
+import HorizontalRule from "@/components/Elements/HorizontalRule";
+
+import { FilterParams } from "../../api/recipes/getRecipes";
+
+import useFilterForm from "../../hooks/useFilterForm";
 
 interface IFilterFormProps {
   submitFn: (newFilter: FilterParams) => void;
@@ -48,7 +51,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
         />
       </div>
 
-      <hr className="w-full bg-gray-700" />
+      <HorizontalRule />
 
       <div className="flex justify-between">
         <label htmlFor="favourite">Favourited: </label>
@@ -60,7 +63,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
         />
       </div>
 
-      <hr className="w-full bg-gray-700" />
+      <HorizontalRule />
 
       <FilterInputContainer
         id="maxCost"
@@ -72,7 +75,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
         onChange={handleFilterChange}
       />
 
-      <hr className="w-full bg-gray-700" />
+      <HorizontalRule />
 
       <FilterInputContainer
         id="maxCookingTime"
@@ -84,7 +87,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
         onChange={handleFilterChange}
       />
 
-      <hr className="w-full bg-gray-700" />
+      <HorizontalRule />
 
       <FilterInputContainer
         id="serves"
@@ -96,7 +99,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
         onChange={handleFilterChange}
       />
 
-      <hr className="w-full bg-gray-700" />
+      <HorizontalRule />
 
       <div className="flex flex-col">
         <label htmlFor="ingredients">Includes Ingredient:</label>

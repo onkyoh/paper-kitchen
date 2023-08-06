@@ -6,18 +6,19 @@ import Share from "../features/share/routes";
 import GroceryLists from "@/features/recipes/routes/GroceryLists";
 import Recipes from "@/features/recipes/routes/Recipes";
 import { useAuth } from "@/features/auth/api/getUser";
-import Spinner from "@/components/Elements/Spinner";
+
 import useAuthStore from "@/features/auth/stores/useAuthStore";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const index = () => {
   const auth = useAuth();
-
   const { user, setUser } = useAuthStore();
+
+  const lastVisited = window.localStorage.getItem("last_visited") as string;
 
   useEffect(() => {
     if (auth.isSuccess) {
-      setUser(auth.data.data);
+      setUser(auth.data);
     }
   }, [auth.data, auth.isSuccess]);
 
@@ -28,7 +29,10 @@ const index = () => {
       path: "/",
       element: <Main />,
       children: [
-        { path: "/", element: <Navigate to="recipes" replace /> },
+        {
+          path: "/",
+          element: <Navigate to={lastVisited || "recipes"} replace />,
+        },
         { path: "recipes", element: <Recipes /> },
         { path: "grocery-lists", element: <GroceryLists /> },
       ],
@@ -49,10 +53,36 @@ const index = () => {
   const element = useRoutes([...routes, ...commonRoutes]);
 
   if (auth.isLoading) {
-    return <Spinner />;
+    return <LoadingIcon />;
   }
 
   return <>{element}</>;
 };
 
 export default index;
+
+const LoadingIcon = () => {
+  const [text, setText] = useState("");
+  const fullText = "PaperKitchen";
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setText((currentText) => {
+        if (currentText.length < fullText.length) {
+          return fullText.slice(0, currentText.length + 1);
+        } else {
+          clearInterval(interval);
+          return currentText;
+        }
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex h-screen w-screen items-center justify-center bg-white">
+      <p className="text-3xl font-bold text-black">{text}</p>
+    </div>
+  );
+};
