@@ -17,12 +17,12 @@ import FilterForm from "../components/Forms/FilterForm";
 import LeaveForm from "../components/Forms/LeaveForm";
 import Permissions from "../components/Forms/Permissions";
 
+import { useEffect } from "react";
+import useFilter from "../hooks/useFilter";
 import useCardStore from "../stores/useCardStore";
 import useModalStore from "@/stores/useModalStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
-import { useEffect } from "react";
-import useFilter from "../hooks/useFilter";
 import { useRecipes } from "../api/recipes/getRecipes";
 import { useCreateRecipe } from "../api/recipes/createRecipe";
 import { useDeleteRecipe } from "../api/recipes/deleteRecipe";
@@ -48,7 +48,9 @@ const Recipes = () => {
   useEffect(() => {
     if (recipes.status === "success" && isOpen.filter) {
       toggleOpen("filter");
+      return;
     }
+    back();
   }, [recipes.status]);
 
   if (recipes.isLoading) return <Spinner />;
