@@ -13,6 +13,7 @@ import DeleteCard from "../components/Forms/DeleteCard";
 import Permissions from "../components/Forms/Permissions";
 import LeaveForm from "../components/Forms/LeaveForm";
 
+import { useEffect } from "react";
 import useCardStore from "../stores/useCardStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
@@ -34,6 +35,11 @@ const GroceryLists = () => {
   const updateGroceryList = useUpdateGroceryList();
   const shareGroceryList = useShareGroceryList();
   const leaveGroceryList = useLeaveGroceryList();
+
+  //so clicking back when card is selected resets relevant states.
+  useEffect(() => {
+    back();
+  }, []);
 
   if (groceryLists.isLoading) return <Spinner />;
 
