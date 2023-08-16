@@ -6,13 +6,10 @@ import useStriking from "../../hooks/useStriking";
 import useInstructions from "../../hooks/useInstructions";
 
 import { IInstruction, IRecipe } from "../../../../types";
-import { ChangeEvent } from "react";
 
-interface IInstructionInputProps {
+interface IInstructionInputProps
+  extends React.ButtonHTMLAttributes<HTMLInputElement> {
   instruction: IInstruction;
-  onChange: (e: ChangeEvent<HTMLInputElement>, index?: number) => void;
-  placeholder?: string;
-  name: string;
 }
 
 interface IInstructionListProps {
@@ -26,8 +23,13 @@ export default function InstructionsList({
 }: IInstructionListProps) {
   const { strikedArray, handleStrike } = useStriking();
 
-  const { newInstruction, handleChange, handleAdd, handleDelete } =
-    useInstructions();
+  const {
+    newInstruction,
+    handleChange,
+    handleAdd,
+    handleDelete,
+    handleKeyDown,
+  } = useInstructions();
 
   return (
     <ol className="flex list-inside list-decimal flex-col">
@@ -37,6 +39,7 @@ export default function InstructionsList({
             <InstructionInput
               instruction={newInstruction}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               placeholder="new instruction..."
               name="new instruction"
             />
@@ -78,21 +81,14 @@ export default function InstructionsList({
   );
 }
 
-const InstructionInput = ({
-  instruction,
-  onChange,
-  placeholder,
-  name,
-}: IInstructionInputProps) => {
+const InstructionInput = ({ instruction, ...rest }: IInstructionInputProps) => {
   return (
     <Input
       type="text"
-      onChange={onChange}
       id={instruction.id}
       value={instruction.text || ""}
-      placeholder={placeholder}
-      name={name}
       className="flex-grow"
+      {...rest}
     />
   );
 };

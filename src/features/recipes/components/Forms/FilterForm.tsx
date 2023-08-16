@@ -10,6 +10,7 @@ import useFilterForm from "../../hooks/useFilterForm";
 
 interface IFilterFormProps {
   submitFn: (newFilter: FilterParams) => void;
+  currentFilter: FilterParams | null;
 }
 
 interface IFilterRangeInputProps
@@ -19,15 +20,14 @@ interface IFilterRangeInputProps
   value: string;
 }
 
-const FilterForm = ({ submitFn }: IFilterFormProps) => {
+const FilterForm = ({ submitFn, currentFilter }: IFilterFormProps) => {
   const {
-    defaultFilter,
     newFilter,
     handleFilterChange,
     newIngredient,
     handleChangeIngredient,
     addIngredient,
-  } = useFilterForm();
+  } = useFilterForm(currentFilter);
 
   return (
     <Form
@@ -136,7 +136,7 @@ const FilterForm = ({ submitFn }: IFilterFormProps) => {
 
       <Button
         className="w-full border-2 border-black bg-blue-400"
-        disabled={newFilter == defaultFilter}
+        disabled={newFilter == currentFilter}
         aria-label="submit filtered search"
       >
         Search

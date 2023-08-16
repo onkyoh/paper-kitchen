@@ -30,7 +30,7 @@ describe("paperkitchen", () => {
 
     //logout
 
-    cy.url().should("eq", "http://127.0.0.1:5173/");
+    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
 
     cy.get('button[aria-label="open options main"]').click();
 
@@ -152,6 +152,7 @@ describe("paperkitchen", () => {
 
   it("tests share link functionaliy", () => {
     const user = userGenerator();
+    const joiner = userGenerator();
     const title = titleGenerator();
 
     cy.visit("http://127.0.0.1:5173/auth/register");
@@ -181,7 +182,19 @@ describe("paperkitchen", () => {
 
     cy.window().then((win) => {
       win.navigator.clipboard.readText().then((text) => {
-        expect(text).to.exist;
+        expect(
+          `A recipe has been shared with you. Follow the link to join: ${text}`
+        ).to.exist;
+
+        cy.get('button[aria-label="back"]').click();
+
+        cy.get('button[aria-label="open options main"]').click();
+
+        cy.get("li")
+          .contains("p", /logout/i)
+          .click();
+
+        cy.contains("button", /logout/i).click();
       });
     });
   });

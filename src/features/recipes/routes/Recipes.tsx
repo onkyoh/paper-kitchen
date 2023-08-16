@@ -115,7 +115,7 @@ const Recipes = () => {
       </Modal>
 
       <Modal modal={"filter"} isLoading={recipes.isLoading}>
-        <FilterForm submitFn={updateFilter} />
+        <FilterForm submitFn={updateFilter} currentFilter={filter} />
       </Modal>
 
       {/* modals activated within page header */}

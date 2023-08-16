@@ -20,7 +20,7 @@ export default function CardList({
   return (
     <div className="flex flex-col gap-4 p-4 pt-20">
       {clearFilterChild}
-      <ul className="grid min-h-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {data && data.map((card) => <Card card={card} key={card.id} />)}
       </ul>
       {loadMoreChild}

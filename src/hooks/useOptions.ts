@@ -11,6 +11,7 @@ const useOptions = () => {
 
   const handleBlur = useCallback(
     (event: React.FocusEvent) => {
+      if (!optionsOpen) return;
       if (!listRef.current?.contains(event.relatedTarget as Node)) {
         setOptionsOpen(false);
       }

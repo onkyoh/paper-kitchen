@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FilterParams } from "../api/getRecipes";
+import { FilterParams } from "../api/recipes/getRecipes";
 
-const useFilterForm = () => {
+const useFilterForm = (currentFilter: FilterParams | null) => {
   const defaultFilter = {
     isOwner: false,
     favourite: false,
@@ -10,7 +10,9 @@ const useFilterForm = () => {
     serves: "",
     ingredients: [],
   };
-  const [newFilter, setNewFilter] = useState<FilterParams>(defaultFilter);
+  const [newFilter, setNewFilter] = useState<FilterParams>(
+    currentFilter || defaultFilter
+  );
 
   const [newIngredient, setNewIngredient] = useState("");
 
@@ -46,7 +48,7 @@ const useFilterForm = () => {
   };
 
   return {
-    defaultFilter,
+    currentFilter,
     newFilter,
     handleFilterChange,
     newIngredient,
