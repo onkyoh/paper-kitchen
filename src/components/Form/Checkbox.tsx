@@ -16,7 +16,7 @@ const Checkbox = ({
   return (
     <input
       type="checkbox"
-      checked={isChecked}
+      checked={isChecked || false}
       onChange={handleChange}
       id={id}
       name={name}

@@ -51,11 +51,21 @@ const useInstructions = () => {
     [card, updateCard]
   );
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        handleAdd();
+      }
+    },
+    [handleAdd]
+  );
+
   return {
     newInstruction,
     handleChange,
     handleAdd,
     handleDelete,
+    handleKeyDown,
   };
 };
 

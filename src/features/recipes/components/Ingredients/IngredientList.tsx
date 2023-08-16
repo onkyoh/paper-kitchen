@@ -22,8 +22,13 @@ export default function IngredientList({
 }: IIngredientListProps) {
   const { strikedArray, handleStrike } = useStriking();
 
-  const { newIngredient, handleChange, handleAdd, handleDelete } =
-    useIngredients();
+  const {
+    newIngredient,
+    handleChange,
+    handleAdd,
+    handleDelete,
+    handleKeyDown,
+  } = useIngredients();
 
   return (
     <ul className="flex flex-col-reverse">
@@ -56,6 +61,7 @@ export default function IngredientList({
           <IngredientInputContainer
             handleChange={handleChange}
             ingredient={newIngredient}
+            onKeyDown={handleKeyDown}
           >
             <ListButton onClick={handleAdd} aria-label="add ingredient">
               +

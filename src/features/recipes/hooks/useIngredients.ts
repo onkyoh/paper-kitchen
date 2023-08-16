@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { IIngredient } from "../../../types";
 import useCardStore from "../stores/useCardStore";
+import useNotificationStore from "@/stores/useNotificationStore";
 
 const useIngredients = () => {
+  const { addNotification } = useNotificationStore();
+
   const defaultIngredient = {
     id: window.crypto.randomUUID(),
     name: "",
@@ -36,8 +39,23 @@ const useIngredients = () => {
 
   const handleAdd = useCallback(() => {
     if (!card?.ingredients) return;
+    const ingredientName = newIngredient.name.trim();
+    if (
+      card.ingredients.findIndex(
+        (ingredient) => ingredient.name === ingredientName
+      ) >= 0
+    ) {
+      addNotification({
+        isError: true,
+        message: "Ingredient already included",
+      });
+      return;
+    }
     updateCard({
-      ingredients: [...card.ingredients, newIngredient],
+      ingredients: [
+        ...card.ingredients,
+        { ...newIngredient, name: ingredientName },
+      ],
     });
     setNewIngredient({ ...defaultIngredient });
   }, [card, newIngredient, updateCard]);
@@ -54,11 +72,21 @@ const useIngredients = () => {
     [card, updateCard]
   );
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        handleAdd();
+      }
+    },
+    [handleAdd]
+  );
+
   return {
     newIngredient,
     handleChange,
     handleAdd,
     handleDelete,
+    handleKeyDown,
   };
 };
 
