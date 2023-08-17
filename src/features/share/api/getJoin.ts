@@ -1,5 +1,6 @@
 import { axios } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 interface JoinData {
   owner: string;
@@ -15,8 +16,16 @@ const getJoinInfo = (url: string): Promise<JoinData> => {
 };
 
 export const useJoinInfo = (url: string) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ["join-link"],
     queryFn: () => getJoinInfo(url),
   });
+
+  useEffect(() => {
+    if (query.isSuccess) {
+      sessionStorage.setItem("join-link", url);
+    }
+  }, [query.isSuccess, url]);
+
+  return query;
 };
