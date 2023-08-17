@@ -12,10 +12,6 @@ import { useNavigate } from "react-router-dom";
 import useNavStore from "@/stores/useModalStore";
 import useOptions from "@/hooks/useOptions";
 
-const outletStyle = {
-  minHeight: "calc(100vh - 4rem)",
-};
-
 const Main = () => {
   const { toggleOpen } = useNavStore();
   const { optionsOpen, toggleOptions, handleBlur, listRef } = useOptions();
@@ -39,7 +35,7 @@ const Main = () => {
   };
 
   return (
-    <main>
+    <main className="fixed inset-0 h-full w-full">
       <nav className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-dashed border-black bg-white p-4">
         <span className="hidden font-bold md:flex md:flex-1">PaperKitchen</span>
         <span className="flex-1 font-bold md:hidden">PK</span>
@@ -136,10 +132,7 @@ const Main = () => {
           </OptionsList>
         )}
       </nav>
-      <div
-        className="relative mt-16 h-full overflow-y-auto bg-gray-200"
-        style={outletStyle}
-      >
+      <div className="relative h-full min-h-screen overflow-y-auto bg-gray-200 pt-16">
         <Outlet />
       </div>
 
