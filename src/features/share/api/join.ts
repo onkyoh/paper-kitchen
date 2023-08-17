@@ -8,6 +8,7 @@ const join = (url: string): Promise<"/grocery-lists" | "/recipes"> => {
 
 export const useJoin = () => {
   const navigate = useNavigate();
+  sessionStorage.removeItem("join-link");
   return useMutation({
     onSuccess: (path) => {
       navigate(path);

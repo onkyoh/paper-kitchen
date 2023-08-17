@@ -20,7 +20,7 @@ const Checkbox = ({
       onChange={handleChange}
       id={id}
       name={name}
-      className={`h-6 w-6 p-1 accent-white outline-dashed outline-2 outline-black focus:outline ${className}`}
+      className={`h-6 w-6 p-1 accent-black outline-dashed outline-2 outline-black checked:outline ${className}`}
     />
   );
 };

@@ -12,10 +12,14 @@ import { useNavigate } from "react-router-dom";
 import useNavStore from "@/stores/useModalStore";
 import useOptions from "@/hooks/useOptions";
 
+const outletStyle = {
+  minHeight: "calc(100vh - 4rem)",
+};
+
 const Main = () => {
-  const location = useLocation();
   const { toggleOpen } = useNavStore();
   const { optionsOpen, toggleOptions, handleBlur, listRef } = useOptions();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const navList = [
@@ -24,10 +28,9 @@ const Main = () => {
   ];
 
   useEffect(() => {
-    const token = sessionStorage.getItem("join-link");
-    if (token) {
-      navigate(`/join/${token}`);
-      sessionStorage.removeItem("join-link");
+    const url = sessionStorage.getItem("join-link");
+    if (url) {
+      navigate(`/join/${url}`);
     }
   }, []);
 
@@ -133,7 +136,10 @@ const Main = () => {
           </OptionsList>
         )}
       </nav>
-      <div className="relative h-full min-h-screen overflow-y-auto bg-gray-200">
+      <div
+        className="relative mt-16 h-full overflow-y-auto bg-gray-200"
+        style={outletStyle}
+      >
         <Outlet />
       </div>
 

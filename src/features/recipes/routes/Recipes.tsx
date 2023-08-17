@@ -17,10 +17,8 @@ import FilterForm from "../components/Forms/FilterForm";
 import LeaveForm from "../components/Forms/LeaveForm";
 import Permissions from "../components/Forms/Permissions";
 
-import { useEffect } from "react";
 import useFilter from "../hooks/useFilter";
 import useCardStore from "../stores/useCardStore";
-import useModalStore from "@/stores/useModalStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
 import { useRecipes } from "../api/recipes/getRecipes";
@@ -34,24 +32,14 @@ const Recipes = () => {
   const { card, updateCard, back, isChanged, editMode, toggleEditMode } =
     useCardStore();
   const { user } = useAuthStore();
-  const { isOpen, toggleOpen } = useModalStore();
   const { filter, updateFilter } = useFilter();
 
   const recipes = useRecipes(filter);
-
   const createRecipe = useCreateRecipe();
   const deleteRecipe = useDeleteRecipe();
   const updateRecipe = useUpdateRecipe();
   const shareRecipe = useShareRecipe();
   const leaveRecipe = useLeaveRecipe();
-
-  useEffect(() => {
-    if (recipes.status === "success" && isOpen.filter) {
-      toggleOpen("filter");
-      return;
-    }
-    back();
-  }, [recipes.status]);
 
   if (recipes.isLoading) return <Spinner />;
 
