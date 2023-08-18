@@ -62,7 +62,6 @@ const GroceryLists = () => {
               title: card.title,
             })
           }
-          shareLoading={shareGroceryList.isLoading}
         >
           <div className="flex justify-between">
             <Title editMode={editMode} title={card.title} />
