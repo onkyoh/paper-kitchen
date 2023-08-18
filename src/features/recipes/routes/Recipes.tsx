@@ -81,7 +81,6 @@ const Recipes = () => {
               title: card.title,
             })
           }
-          shareLoading={shareRecipe.isLoading}
         >
           <Title editMode={editMode} title={card.title} />
           <TagsContainer card={card} editMode={editMode} />

@@ -1,4 +1,5 @@
 import { axios } from "@/lib/axios";
+import useModalStore from "@/stores/useModalStore";
 import useNotificationStore from "@/stores/useNotificationStore";
 import { useMutation } from "@tanstack/react-query";
 
@@ -18,12 +19,14 @@ const updatePermissions = (data: IData): Promise<string> => {
 
 export const useUpdatePermissions = () => {
   const { addNotification } = useNotificationStore();
+  const { toggleOpen } = useModalStore();
   return useMutation({
     onSuccess: () => {
       addNotification({
         isError: false,
         message: "Permissions updated successfully",
       });
+      toggleOpen("permissions");
     },
     mutationFn: updatePermissions,
   });
