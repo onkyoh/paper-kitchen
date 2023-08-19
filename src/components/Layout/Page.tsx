@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 import Button from "../Elements/Button";
 import OptionsItem from "../Options/OptionsItem";
@@ -33,6 +33,15 @@ const Page = ({
   const { toggleOpen } = useNavStore();
   const { user } = useAuthStore();
   const { optionsOpen, toggleOptions, listRef, handleBlur } = useOptions();
+  const [shareLink, setShareLink] = useState("");
+
+  useEffect(() => {
+    const getShareLink = async () => {
+      const link = await shareFn();
+      setShareLink(link);
+    };
+    getShareLink();
+  }, []);
 
   return (
     <div className={`fixed inset-0 z-10 h-full w-full ${color}`}>
@@ -55,11 +64,9 @@ const Page = ({
         </Button>
         <div className="flex gap-4">
           <Button
-            onClick={async () => {
-              const shareLink = await shareFn();
-              await navigator.clipboard.writeText(shareLink);
-            }}
+            onClick={() => navigator.clipboard.writeText(shareLink)}
             aria-label="share"
+            disabled={shareLink ? false : true}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,10 +79,11 @@ const Page = ({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
               />
             </svg>
           </Button>
+
           {isChanged ? (
             <Button onClick={updateFn} aria-label="save changes">
               <svg
