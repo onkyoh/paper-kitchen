@@ -182,9 +182,7 @@ describe("paperkitchen", () => {
 
     cy.window().then((win) => {
       win.navigator.clipboard.readText().then((text) => {
-        expect(
-          `A recipe has been shared with you. Follow the link to join: ${text}`
-        ).to.exist;
+        expect(text).to.exist;
 
         cy.get('button[aria-label="back"]').click();
 
