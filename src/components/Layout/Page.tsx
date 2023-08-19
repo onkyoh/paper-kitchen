@@ -8,6 +8,7 @@ import OptionsList from "../Options/OptionsList";
 import useNavStore from "@/stores/useModalStore";
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 import useOptions from "@/hooks/useOptions";
+import { WEBSITE_URL } from "@/utils/constants";
 
 interface IProps {
   back: () => void;
@@ -64,7 +65,9 @@ const Page = ({
         </Button>
         <div className="flex gap-4">
           <Button
-            onClick={() => navigator.clipboard.writeText(shareLink)}
+            onClick={() =>
+              navigator.clipboard.writeText(`${WEBSITE_URL}/join/${shareLink}`)
+            }
             aria-label="share"
             disabled={shareLink ? false : true}
           >
