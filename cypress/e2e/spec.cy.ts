@@ -178,7 +178,9 @@ describe("paperkitchen", () => {
 
     cy.get("li").contains("p", title).click();
 
-    cy.get('button[aria-label="share"]').click();
+    cy.get('button[aria-label="get share link"]').click();
+
+    cy.get('button[aria-label="copy link"]').click();
 
     cy.window().then((win) => {
       win.navigator.clipboard.readText().then((text) => {
