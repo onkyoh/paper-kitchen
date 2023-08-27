@@ -25,7 +25,7 @@ export const useJoinInfo = (url: string) => {
     if (query.isSuccess) {
       sessionStorage.setItem("join-link", url);
     }
-  }, [query.isSuccess, url]);
+  }, []);
 
   return query;
 };
