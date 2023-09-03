@@ -7,7 +7,7 @@ export interface INotification {
 
 interface NotificationsStore {
   notification: INotification | null;
-  addNotification: (notification: INotification) => void;
+  addNotification: (notification: INotification | null) => void;
   dismissNotification: () => void;
 }
 

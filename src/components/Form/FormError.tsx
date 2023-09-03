@@ -13,7 +13,7 @@ const FormError = ({ errorMessage, className }: IErrorProps) => {
 
   return (
     error && (
-      <span className={`text-center capitalize text-red-400 ${className}`}>
+      <span className={`text-center capitalize ${className}`}>
         {String(error)}
       </span>
     )

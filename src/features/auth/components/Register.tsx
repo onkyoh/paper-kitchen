@@ -43,7 +43,7 @@ const Register = () => {
       }}
     >
       <h2 className="text-center text-lg font-bold">Create an Account</h2>
-      <FormError errorMessage={register.error} />
+      <FormError errorMessage={register.error} className="text-red-400" />
       {registerInputs.map((field) => (
         <InputContainer label={field} key={field}>
           <Input

@@ -1,7 +1,6 @@
 import Spinner from "@/components/Elements/Spinner";
 import Button from "@/components/Elements/Button";
-import Notification from "@/components/Elements/Notification";
-import RainbowBackground from "@/components/Layout/RainbowBackground";
+import FormError from "@/components/Form/FormError";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,6 +10,15 @@ import { useJoin } from "../api/join";
 
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
+import Header from "@/components/Elements/Header";
+import Title from "@/features/recipes/components/Elements/Title";
+import IngredientList from "@/features/recipes/components/Ingredients/IngredientList";
+import InstructionsList from "@/features/recipes/components/Instructions/InstructionsList";
+import TagsContainer from "@/features/recipes/components/Tags/TagsContainer";
+import PageList from "@/components/Layout/PageList";
+import RainbowBackground from "@/components/Layout/RainbowBackground";
+import { AxiosError } from "axios";
+
 const index = () => {
   const { user } = useAuthStore();
 
@@ -18,57 +26,67 @@ const index = () => {
 
   const joinInfo = useJoinInfo(url || "");
 
+  const error = joinInfo.error as AxiosError;
+
   const join = useJoin();
 
-  if (joinInfo.isLoading) return <Spinner />;
+  if (joinInfo.isLoading || !url) return <Spinner />;
 
-  const listType =
-    joinInfo.data && "recipeId" in joinInfo.data ? "Recipe" : "Grocery List";
+  if (!joinInfo.data)
+    return (
+      <RainbowBackground>
+        <div className="border-2 border-black bg-red-400 px-4 py-2">
+          <FormError errorMessage={error} className="text-black" />
+        </div>
+      </RainbowBackground>
+    );
 
   return (
     <>
-      <Notification />
-
-      <RainbowBackground>
-        <div className="relative flex w-72 flex-col gap-2 bg-white p-4 outline outline-2 outline-black">
-          {joinInfo.isSuccess && url ? (
-            <>
-              {!user && (
-                <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-2 backdrop-blur-md">
-                  <h2 className="text-lg font-bold">
-                    Must be logged in to view
-                  </h2>
-                  <Link
-                    to="/auth/login"
-                    className="relative border-2 border-black bg-cyan-400 px-4 py-2 text-center text-lg"
-                    onClick={() =>
-                      window.sessionStorage.setItem("join-link", url)
-                    }
-                  >
-                    Go to login
-                  </Link>
-                </div>
-              )}
-              <h2 className="text-center text-lg font-bold">
-                A {listType} has been shared with you.
-              </h2>
-              <p>Owner: {joinInfo.data.owner}</p>
-              <p>Title: {joinInfo.data.title}</p>
-              <p>
-                Expires: {new Date(joinInfo.data.exp * 1000).toLocaleString()}
-              </p>
-              <Button
-                onClick={() => join.mutateAsync(url || "")}
-                className="w-full border-2 border-black bg-green-400"
-              >
+      <div
+        className={`fixed inset-0 z-10 h-full w-full ${joinInfo.data?.color}`}
+      >
+        <header className="fixed top-0 z-10 w-full border-b-2 border-black">
+          <div className="mx-auto flex h-16 w-full  max-w-2xl items-center  justify-between bg-inherit p-4">
+            <Link to="/" className="flex-1 text-lg font-bold">
+              PaperKitchen
+            </Link>
+            {user ? (
+              <Button onClick={() => join.mutateAsync(url)} aria-label="join">
                 Join
               </Button>
-            </>
-          ) : (
-            <p className="text-center">An error occured</p>
+            ) : (
+              <Link
+                to="/auth/login"
+                className="selected relative text-center"
+                onClick={() => window.sessionStorage.setItem("join-link", url)}
+              >
+                Login to join
+              </Link>
+            )}
+          </div>
+        </header>
+        <PageList>
+          <Title editMode={false} title={joinInfo.data?.title || ""} />
+          {joinInfo.data?.type === "recipe" && (
+            <TagsContainer card={joinInfo.data} editMode={false} />
           )}
-        </div>
-      </RainbowBackground>
+          <Header>Ingredients</Header>
+          <IngredientList
+            ingredients={joinInfo.data?.ingredients || []}
+            editMode={false}
+          />
+          {joinInfo.data?.type === "recipe" && (
+            <>
+              <Header>Instructions</Header>
+              <InstructionsList
+                instructions={joinInfo.data.instructions}
+                editMode={false}
+              />
+            </>
+          )}
+        </PageList>
+      </div>
     </>
   );
 };

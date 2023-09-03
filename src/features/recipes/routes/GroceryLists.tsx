@@ -21,7 +21,6 @@ import { useGroceryLists } from "../api/groceryList/getGroceryLists";
 import { useCreateGroceryList } from "../api/groceryList/createGroceryList";
 import { useDeleteGroceryList } from "../api/groceryList/deleteGroceryList";
 import { useUpdateGroceryList } from "../api/groceryList/updateGroceryList";
-import { useShareGroceryList } from "../api/groceryList/shareGroceryList";
 import { useLeaveGroceryList } from "../api/groceryList/leaveGroceryList";
 
 const GroceryLists = () => {
@@ -33,7 +32,6 @@ const GroceryLists = () => {
   const createGroceryList = useCreateGroceryList();
   const deleteGroceryList = useDeleteGroceryList();
   const updateGroceryList = useUpdateGroceryList();
-  const shareGroceryList = useShareGroceryList();
   const leaveGroceryList = useLeaveGroceryList();
 
   //so clicking back when card is selected resets relevant states.
@@ -53,15 +51,10 @@ const GroceryLists = () => {
           isChanged={isChanged}
           color={card.color}
           ownerId={card.ownerId}
+          cardId={card.id}
           toggleEditMode={toggleEditMode}
           updateFn={() => updateGroceryList.mutateAsync(card)}
-          shareFn={() =>
-            shareGroceryList.mutateAsync({
-              id: card.id,
-              owner: user.name,
-              title: card.title,
-            })
-          }
+          path="grocery-lists"
         >
           <div className="flex justify-between">
             <Title editMode={editMode} title={card.title} />
