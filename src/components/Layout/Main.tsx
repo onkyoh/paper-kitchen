@@ -3,6 +3,7 @@ import Logout from "@/features/auth/components/Logout";
 import OptionsItem from "../Options/OptionsItem";
 import OptionsButton from "../Options/OptionsButton";
 import OptionsList from "../Options/OptionsList";
+import Button from "../Elements/Button";
 
 import { Outlet, Link, useLocation } from "react-router-dom";
 
@@ -37,8 +38,12 @@ const Main = () => {
   return (
     <main className="fixed inset-0 h-full w-full">
       <nav className="fixed top-0 z-10 flex h-16 w-full items-center justify-between border-b-2 border-dashed border-black bg-white p-4">
-        <span className="hidden font-bold md:flex md:flex-1">PaperKitchen</span>
-        <span className="flex-1 font-bold md:hidden">PK</span>
+        <Link to="/" className="hidden text-lg font-bold md:flex md:flex-1">
+          PaperKitchen
+        </Link>
+        <Link to="/" className="flex-1 text-lg font-bold md:hidden">
+          PK
+        </Link>
         <div className="flex flex-1 items-center justify-center gap-4">
           {navList.map((item) => (
             <Link
@@ -54,7 +59,26 @@ const Main = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-1 justify-end">
+        <div className="flex flex-1 justify-end gap-2">
+          <Button
+            onClick={() => toggleOpen("createNew")}
+            aria-label="create new"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </Button>
           <OptionsButton
             isOpen={optionsOpen}
             toggleOpen={toggleOptions}
@@ -67,26 +91,6 @@ const Main = () => {
             listRef={listRef}
             handleBlur={handleBlur}
           >
-            <OptionsItem
-              onClick={() => toggleOpen("createNew")}
-              key="createNew"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-              Create New
-            </OptionsItem>
             <OptionsItem
               onClick={() => toggleOpen("filter")}
               isHidden={location.pathname === "/grocery-lists"}

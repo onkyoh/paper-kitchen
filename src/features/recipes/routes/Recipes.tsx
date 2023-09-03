@@ -25,7 +25,6 @@ import { useRecipes } from "../api/recipes/getRecipes";
 import { useCreateRecipe } from "../api/recipes/createRecipe";
 import { useDeleteRecipe } from "../api/recipes/deleteRecipe";
 import { useUpdateRecipe } from "../api/recipes/updateRecipe";
-import { useShareRecipe } from "../api/recipes/shareRecipe";
 import { useLeaveRecipe } from "../api/recipes/leaveRecipe";
 
 const Recipes = () => {
@@ -38,7 +37,6 @@ const Recipes = () => {
   const createRecipe = useCreateRecipe();
   const deleteRecipe = useDeleteRecipe();
   const updateRecipe = useUpdateRecipe();
-  const shareRecipe = useShareRecipe();
   const leaveRecipe = useLeaveRecipe();
 
   if (recipes.isLoading) return <Spinner />;
@@ -73,14 +71,9 @@ const Recipes = () => {
           isChanged={isChanged}
           toggleEditMode={toggleEditMode}
           ownerId={card.ownerId}
+          cardId={card.id}
           updateFn={() => updateRecipe.mutateAsync(card)}
-          shareFn={() =>
-            shareRecipe.mutateAsync({
-              id: card.id,
-              owner: user.name,
-              title: card.title,
-            })
-          }
+          path="recipes"
         >
           <Title editMode={editMode} title={card.title} />
           <TagsContainer card={card} editMode={editMode} />
@@ -89,7 +82,7 @@ const Recipes = () => {
           )}
           <Header>Ingredients</Header>
           <IngredientList ingredients={card.ingredients} editMode={editMode} />
-          <Header>Ingredients</Header>
+          <Header>Instructions</Header>
           <InstructionsList
             instructions={card.instructions}
             editMode={editMode}

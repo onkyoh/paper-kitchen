@@ -33,7 +33,7 @@ const Login = () => {
       }}
     >
       <h2 className="text-center text-lg font-bold">Login</h2>
-      <FormError errorMessage={login.error} />
+      <FormError errorMessage={login.error} className="text-red-400" />
 
       {loginInputs.map((field) => (
         <InputContainer label={field} key={field}>

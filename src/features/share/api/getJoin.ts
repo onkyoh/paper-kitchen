@@ -1,18 +1,11 @@
-import { axios } from "@/lib/axios";
+import axios from "axios";
+import { IGroceryList, IRecipe } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { API_URL } from "@/utils/constants";
 
-interface JoinData {
-  owner: string;
-  title: string;
-  recipeId?: number;
-  groceryListId?: number;
-  iat: number;
-  exp: number;
-}
-
-const getJoinInfo = (url: string): Promise<JoinData> => {
-  return axios.get(`/join/${url}`);
+const getJoinInfo = (url: string): Promise<IRecipe | IGroceryList> => {
+  return axios.get(`${API_URL}/join/${url}`);
 };
 
 export const useJoinInfo = (url: string) => {

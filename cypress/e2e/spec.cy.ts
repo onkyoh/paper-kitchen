@@ -66,9 +66,7 @@ describe("paperkitchen", () => {
 
     //create new
 
-    cy.get('button[aria-label="open options main"]').click();
-
-    cy.contains("li", /create new/i).click();
+    cy.get('button[aria-label="create new"]').click();
 
     cy.get("input").type(title);
     cy.get("li").eq(3).click();
@@ -165,9 +163,7 @@ describe("paperkitchen", () => {
 
     cy.url().should("eq", "http://127.0.0.1:5173/recipes");
 
-    cy.get('button[aria-label="open options main"]').click();
-
-    cy.contains("li", /create new/i).click();
+    cy.get('button[aria-label="create new"]').click();
 
     cy.get("input").type(title);
     cy.get("li").eq(3).click();
@@ -180,21 +176,13 @@ describe("paperkitchen", () => {
 
     cy.get('button[aria-label="get share link"]').click();
 
+    cy.wait(2000);
+
     cy.get('button[aria-label="copy link"]').click();
 
     cy.window().then((win) => {
       win.navigator.clipboard.readText().then((text) => {
         expect(text).to.exist;
-
-        cy.get('button[aria-label="back"]').click();
-
-        cy.get('button[aria-label="open options main"]').click();
-
-        cy.get("li")
-          .contains("p", /logout/i)
-          .click();
-
-        cy.contains("button", /logout/i).click();
       });
     });
   });

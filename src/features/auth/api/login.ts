@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import useAuthStore from "../stores/useAuthStore";
 import { API_URL } from "@/utils/constants";
 import { UserPromise } from "./getUser";
-import { useNavigate, useLocation } from "react-router-dom";
 import storage from "@/utils/storage";
 
 interface IData {
