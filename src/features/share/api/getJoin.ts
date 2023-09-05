@@ -4,7 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { API_URL } from "@/utils/constants";
 
-const getJoinInfo = (url: string): Promise<IRecipe | IGroceryList> => {
+interface IJoinInfo {
+  data: IRecipe | IGroceryList;
+}
+
+const getJoinInfo = (url: string): Promise<IJoinInfo> => {
   return axios.get(`${API_URL}/join/${url}`);
 };
 
