@@ -32,7 +32,7 @@ const index = () => {
 
   if (joinInfo.isLoading || !url) return <Spinner />;
 
-  if (!joinInfo.data)
+  if (!joinInfo.data?.data)
     return (
       <RainbowBackground>
         <div className="border-2 border-black bg-red-400 px-4 py-2">
@@ -44,7 +44,7 @@ const index = () => {
   return (
     <>
       <div
-        className={`fixed inset-0 z-10 h-full w-full ${joinInfo.data?.color}`}
+        className={`fixed inset-0 z-10 h-full w-full ${joinInfo.data.data.color}`}
       >
         <header className="fixed top-0 z-10 w-full border-b-2 border-black">
           <div className="mx-auto flex h-16 w-full  max-w-2xl items-center  justify-between bg-inherit p-4">
@@ -67,20 +67,20 @@ const index = () => {
           </div>
         </header>
         <PageList>
-          <Title editMode={false} title={joinInfo.data?.title || ""} />
-          {joinInfo.data?.type === "recipe" && (
-            <TagsContainer card={joinInfo.data} editMode={false} />
+          <Title editMode={false} title={joinInfo.data.data.title || ""} />
+          {joinInfo.data.data.type === "recipe" && (
+            <TagsContainer card={joinInfo.data.data} editMode={false} />
           )}
           <Header>Ingredients</Header>
           <IngredientList
-            ingredients={joinInfo.data?.ingredients || []}
+            ingredients={joinInfo.data.data.ingredients || []}
             editMode={false}
           />
-          {joinInfo.data?.type === "recipe" && (
+          {joinInfo.data.data.type === "recipe" && (
             <>
               <Header>Instructions</Header>
               <InstructionsList
-                instructions={joinInfo.data.instructions}
+                instructions={joinInfo.data.data.instructions}
                 editMode={false}
               />
             </>
