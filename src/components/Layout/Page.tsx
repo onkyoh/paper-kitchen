@@ -43,7 +43,7 @@ const Page = ({
 
   return (
     <div className={`fixed inset-0 z-10 h-full w-full ${color}`}>
-      <header className="fixed top-0 z-10 w-full border-b-2 border-black">
+      <header className="fixed top-0 z-10 w-full border-b-2 border-black bg-inherit">
         <div className="mx-auto flex h-16 w-full  max-w-2xl items-center  justify-between bg-inherit p-4">
           <Button onClick={back} aria-label="back">
             <svg
