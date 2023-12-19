@@ -92,7 +92,7 @@ const FilterForm = ({ submitFn, currentFilter }: IFilterFormProps) => {
       <FilterInputContainer
         id="serves"
         name="serves"
-        label="Serves:"
+        label="Min. Servings:"
         max="30"
         min="0"
         value={newFilter.serves || ""}

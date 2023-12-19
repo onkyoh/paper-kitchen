@@ -1,9 +1,11 @@
 import { axios } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
-import useNotificationStore from "@/stores/useNotificationStore";
 import { useMutation } from "@tanstack/react-query";
-import useCardStore from "../../stores/useCardStore";
 import { IInfiniteRecipeQuery } from "@/types";
+
+import useNotificationStore from "@/stores/useNotificationStore";
+import { useNavigate } from "react-router-dom";
+import useModalStore from "@/stores/useModalStore";
 
 const leaveRecipe = (id: number): Promise<string> => {
   return axios.delete(`/recipes/${id}/permissions`);
@@ -11,10 +13,11 @@ const leaveRecipe = (id: number): Promise<string> => {
 
 export const useLeaveRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const { back } = useCardStore();
+  const { resetModals } = useModalStore();
+  const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedRecipe) => {
-      await queryClient.cancelQueries(["recipes"]);
+      await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<IInfiniteRecipeQuery>([
         "recipes",
@@ -27,6 +30,11 @@ export const useLeaveRecipe = () => {
         pageParams: previousRecipes?.pageParams || [],
       });
 
+      if (!navigator.onLine) {
+        navigate("/recipes");
+        return resetModals();
+      }
+
       return { previousRecipes };
     },
     onError(_, __, context) {
@@ -35,12 +43,12 @@ export const useLeaveRecipe = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["recipes"]);
+      queryClient.invalidateQueries({ queryKey: ["recipes"] });
       addNotification({
         isError: false,
         message: "Successfully left recipe",
       });
-      back();
+      navigate("/recipes");
     },
     mutationFn: leaveRecipe,
   });

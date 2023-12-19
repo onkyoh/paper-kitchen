@@ -16,12 +16,12 @@ const TagsContainer = ({ editMode, card }: ITitleContainerProps) => {
   const { handleToggle, handleChange } = useTags();
 
   return (
-    <div className="flex flex-col gap-2">
+    <>
       {!editMode ? (
         <TagList card={card} />
       ) : (
         <>
-          <ul className="flex gap-2">
+          <ul className="flex flex-wrap gap-2">
             <Tag field="favourite" key="favourite">
               <Checkbox
                 handleChange={handleToggle}
@@ -42,7 +42,7 @@ const TagsContainer = ({ editMode, card }: ITitleContainerProps) => {
           </ul>
         </>
       )}
-    </div>
+    </>
   );
 };
 

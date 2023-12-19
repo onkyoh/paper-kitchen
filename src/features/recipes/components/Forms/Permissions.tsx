@@ -18,7 +18,7 @@ const Permissions = ({ path, id }: IPermissionsProps) => {
   const { editingIds, handleEdit, deletingIds, handleDelete } =
     usePermissions();
 
-  if (permissionsList.isLoading) return <Spinner />;
+  if (permissionsList.isPending) return <Spinner />;
 
   return (
     <Form

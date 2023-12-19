@@ -57,6 +57,9 @@ const Login = () => {
       <Link to="../register" className="text-center underline">
         Need an account?
       </Link>
+      <Link to="../forgot-password" className="text-center underline">
+        Forgot your password?
+      </Link>
     </Form>
   );
 };

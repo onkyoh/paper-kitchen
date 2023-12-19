@@ -1,6 +1,14 @@
 import Spinner from "@/components/Elements/Spinner";
 import Button from "@/components/Elements/Button";
 import FormError from "@/components/Form/FormError";
+import Notification from "@/components/Elements/Notification";
+import Header from "@/components/Elements/Header";
+import Title from "@/features/recipes/components/Elements/Title";
+import IngredientList from "@/features/recipes/components/Ingredients/IngredientList";
+import InstructionsList from "@/features/recipes/components/Instructions/InstructionsList";
+import TagsContainer from "@/features/recipes/components/Tags/TagsContainer";
+import PageList from "@/components/Layout/PageList";
+import RainbowBackground from "@/components/Layout/RainbowBackground";
 
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -10,13 +18,6 @@ import { useJoin } from "../api/join";
 
 import useAuthStore from "@/features/auth/stores/useAuthStore";
 
-import Header from "@/components/Elements/Header";
-import Title from "@/features/recipes/components/Elements/Title";
-import IngredientList from "@/features/recipes/components/Ingredients/IngredientList";
-import InstructionsList from "@/features/recipes/components/Instructions/InstructionsList";
-import TagsContainer from "@/features/recipes/components/Tags/TagsContainer";
-import PageList from "@/components/Layout/PageList";
-import RainbowBackground from "@/components/Layout/RainbowBackground";
 import { AxiosError } from "axios";
 
 const index = () => {
@@ -30,13 +31,16 @@ const index = () => {
 
   const join = useJoin();
 
-  if (joinInfo.isLoading || !url) return <Spinner />;
+  if (joinInfo.isPending || !url) return <Spinner />;
 
   if (!joinInfo.data?.data)
     return (
       <RainbowBackground>
-        <div className="border-2 border-black bg-red-400 px-4 py-2">
+        <div className="flex flex-col items-center justify-center gap-2 border-2 border-black bg-red-400 px-4 py-2">
           <FormError errorMessage={error} className="text-black" />
+          <Link to="/grocery-lists" className="text-center underline">
+            Contine
+          </Link>
         </div>
       </RainbowBackground>
     );
@@ -87,6 +91,8 @@ const index = () => {
           )}
         </PageList>
       </div>
+
+      <Notification />
     </>
   );
 };

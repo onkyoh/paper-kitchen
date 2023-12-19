@@ -1,9 +1,6 @@
 import { axios } from "@/lib/axios";
 import { IRecipe } from "@/types";
-import { useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import useCardStore from "../../stores/useCardStore";
-import useModalStore from "@/stores/useModalStore";
 
 export interface IQueryParams {
   isOwner?: boolean;
@@ -26,12 +23,10 @@ const getRecipes = (queryParams: IQueryParams): Promise<IRecipe[]> => {
 };
 
 export const useRecipes = (filter: FilterParams) => {
-  const { back } = useCardStore();
-  const { isOpen, toggleOpen } = useModalStore();
-
   const query = useInfiniteQuery<IRecipe[]>({
     queryKey: ["recipes", filter],
-    queryFn: ({ pageParam = 1 }) => getRecipes({ page: pageParam, ...filter }),
+    queryFn: ({ pageParam = 1 }) =>
+      getRecipes({ page: pageParam as number, ...filter }),
     getNextPageParam: (lastPage, allPages) => {
       const totalRecipes = allPages.flatMap((page) => page).length;
 
@@ -41,15 +36,8 @@ export const useRecipes = (filter: FilterParams) => {
         return undefined;
       }
     },
+    initialPageParam: 1,
   });
-
-  useEffect(() => {
-    if (query.isSuccess && isOpen.filter) {
-      toggleOpen("filter");
-      return;
-    }
-    back();
-  }, [query.isSuccess]);
 
   return query;
 };

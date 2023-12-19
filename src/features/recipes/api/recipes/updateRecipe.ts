@@ -14,7 +14,7 @@ export const useUpdateRecipe = () => {
   const { turnOffEditMode } = useCardStore();
   return useMutation({
     onMutate: async (updatingRecipe: IRecipe) => {
-      await queryClient.cancelQueries(["recipes"]);
+      await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<IInfiniteRecipeQuery>([
         "recipes",
@@ -27,6 +27,10 @@ export const useUpdateRecipe = () => {
         pageParams: previousRecipes?.pageParams || [],
       });
 
+      if (!navigator.onLine) {
+        return turnOffEditMode();
+      }
+
       return { previousRecipes };
     },
     onError(_, __, context) {
@@ -35,7 +39,7 @@ export const useUpdateRecipe = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["recipes"]);
+      queryClient.invalidateQueries({ queryKey: ["recipes"] });
       addNotification({
         isError: false,
         message: "Recipe updated",

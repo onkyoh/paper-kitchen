@@ -18,6 +18,7 @@ const ColorList = ({ color, handleSelectColor }: IColorListProps) => {
       {BACKGROUND_COLORS.map((bgColor) => (
         <li
           key={bgColor}
+          aria-label={bgColor}
           className={`${bgColor} h-6 w-6 border-2 border-black ${
             color === bgColor ? "border-solid" : "border-dashed"
           } `}

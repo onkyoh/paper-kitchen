@@ -1,4 +1,3 @@
-import useStriking from "../../hooks/useStriking";
 import { IIngredient } from "../../../../types";
 import ListButton from "../Elements/ListButton";
 import useIngredients from "../../hooks/useIngredients";
@@ -8,6 +7,8 @@ import HorizontalRule from "@/components/Elements/HorizontalRule";
 interface IIngredientListProps {
   ingredients: IIngredient[];
   editMode: boolean;
+  strikedArray?: string[];
+  handleStrike?: (id: string) => void;
 }
 
 interface IIngredientItemProps {
@@ -19,9 +20,9 @@ interface IIngredientItemProps {
 export default function IngredientList({
   ingredients,
   editMode,
+  strikedArray,
+  handleStrike,
 }: IIngredientListProps) {
-  const { strikedArray, handleStrike } = useStriking();
-
   const {
     newIngredient,
     handleChange,
@@ -33,7 +34,14 @@ export default function IngredientList({
   return (
     <ul className="flex flex-col-reverse">
       {ingredients.map((ingredient) =>
-        editMode ? (
+        !editMode && strikedArray && handleStrike ? (
+          <IngredientItem
+            ingredient={ingredient}
+            key={ingredient.id}
+            isStriked={strikedArray.includes(ingredient.id)}
+            handleStrike={handleStrike}
+          />
+        ) : (
           <IngredientInputContainer
             key={ingredient.id}
             ingredient={ingredient}
@@ -46,13 +54,6 @@ export default function IngredientList({
               X
             </ListButton>
           </IngredientInputContainer>
-        ) : (
-          <IngredientItem
-            ingredient={ingredient}
-            key={ingredient.id}
-            isStriked={strikedArray.includes(ingredient.id)}
-            handleStrike={handleStrike}
-          />
         )
       )}
       {editMode && (

@@ -44,6 +44,10 @@ export interface IUser {
   id: number;
   name: string;
   username: string;
+  email: {
+    address?: string;
+    isAuthenticated: boolean;
+  };
 }
 
 export interface ICreateCard {

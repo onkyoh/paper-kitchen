@@ -11,19 +11,21 @@ import { useRegister } from "../api/register";
 
 interface IRegisterValues {
   name: string;
+  email: string;
   username: string;
   password: string;
 }
 
-type Field = "name" | "username" | "password";
+type Field = "name" | "email" | "username" | "password";
 
 const Register = () => {
   const register = useRegister();
 
-  const registerInputs: Field[] = ["name", "username", "password"];
+  const registerInputs: Field[] = ["name", "email", "username", "password"];
 
   const [registerForm, setRegisterForm] = useState<IRegisterValues>({
     name: "",
+    email: "",
     username: "",
     password: "",
   });
@@ -51,7 +53,7 @@ const Register = () => {
             id={field}
             value={registerForm[field]}
             onChange={handleChangeForm}
-            type={field === "password" ? "password" : "text"}
+            type={field.includes("name") ? "text" : field}
           />
         </InputContainer>
       ))}

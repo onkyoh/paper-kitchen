@@ -19,14 +19,19 @@ const updatePermissions = (data: IData): Promise<string> => {
 
 export const useUpdatePermissions = () => {
   const { addNotification } = useNotificationStore();
-  const { toggleOpen } = useModalStore();
+  const { resetModals } = useModalStore();
   return useMutation({
+    onMutate: () => {
+      if (!navigator.onLine) {
+        return resetModals();
+      }
+    },
     onSuccess: () => {
       addNotification({
         isError: false,
         message: "Permissions updated successfully",
       });
-      toggleOpen("permissions");
+      resetModals();
     },
     mutationFn: updatePermissions,
   });

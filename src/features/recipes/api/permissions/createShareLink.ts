@@ -16,6 +16,15 @@ export const useShareLink = () => {
   const { addNotification } = useNotificationStore();
 
   const mutation = useMutation({
+    onMutate: () => {
+      if (!navigator.onLine) {
+        addNotification({
+          isError: true,
+          message: "Requires internet connection",
+        });
+        return;
+      }
+    },
     mutationFn: shareLink,
   });
 

@@ -9,7 +9,7 @@ const Button = ({ children, className, ...rest }: IButtonProps) => {
   return (
     <button
       className={`flex h-8 w-8 items-center justify-center border-dashed
-      hover:border-2 hover:border-solid hover:border-black hover:backdrop-brightness-90 
+      hover:border-2 hover:border-solid hover:border-black hover:brightness-95
       disabled:cursor-not-allowed disabled:opacity-50 
       ${className}`}
       {...rest}

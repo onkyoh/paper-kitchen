@@ -48,6 +48,9 @@ Cypress.Commands.add("checkAndDismissNotification", () => {
   // Wait for the notification to appear
   cy.get('[aria-label="notification"]').should("be.visible");
 
+  // Check for successful notification (green background)
+  cy.get('[aria-label="notification"]').should("have.class", "bg-green-400");
+
   // Click the button to dismiss the notification
   cy.get('[aria-label="dismiss notification"]').click();
 

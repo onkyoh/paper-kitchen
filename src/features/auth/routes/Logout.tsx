@@ -23,7 +23,7 @@ const Logout = () => {
         onClick={logout}
         className="w-full border-2 border-black bg-red-400"
       >
-        Logout
+        Confirm
       </Button>
     </Modal>
   );

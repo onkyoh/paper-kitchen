@@ -2,7 +2,6 @@ import { render, fireEvent } from "@testing-library/react";
 import Modal from "../Modal";
 import useModalStore, { ModalState } from "@/stores/useModalStore";
 import { StoreApi } from "zustand";
-import React from "react";
 
 jest.mock("@/stores/useModalStore");
 

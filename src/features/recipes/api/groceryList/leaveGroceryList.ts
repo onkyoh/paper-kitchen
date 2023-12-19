@@ -2,8 +2,9 @@ import { axios } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
 import useNotificationStore from "@/stores/useNotificationStore";
 import { useMutation } from "@tanstack/react-query";
-import useCardStore from "../../stores/useCardStore";
 import { IGroceryList } from "@/types";
+import { useNavigate } from "react-router-dom";
+import useModalStore from "@/stores/useModalStore";
 
 const leaveGroceryList = (id: number): Promise<string> => {
   return axios.delete(`/grocery-lists/${id}/permissions`);
@@ -11,10 +12,12 @@ const leaveGroceryList = (id: number): Promise<string> => {
 
 export const useLeaveGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { back } = useCardStore();
+  const { resetModals } = useModalStore();
+  const navigate = useNavigate();
+
   return useMutation({
     onMutate: async (deletedGroceryList) => {
-      await queryClient.cancelQueries(["grocery-lists"]);
+      await queryClient.cancelQueries({ queryKey: ["grocery-lists"] });
 
       const previousGroceryLists = queryClient.getQueryData<IGroceryList[]>([
         "grocery-lists",
@@ -27,6 +30,11 @@ export const useLeaveGroceryList = () => {
         )
       );
 
+      if (!navigator.onLine) {
+        navigate("/grocery-lists");
+        return resetModals();
+      }
+
       return { previousGroceryLists };
     },
     onError(_, __, context) {
@@ -38,12 +46,12 @@ export const useLeaveGroceryList = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["grocery-lists"]);
+      queryClient.invalidateQueries({ queryKey: ["grocery-lists"] });
       addNotification({
         isError: false,
         message: "Successfully left grocery list",
       });
-      back();
+      navigate("/grocery-list");
     },
     mutationFn: leaveGroceryList,
   });
