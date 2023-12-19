@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/lib/react-query";
 import { IUser } from "@/types";
 import { axios } from "@/lib/axios";
+import useAuthStore from "../stores/useAuthStore";
+import { useEffect } from "react";
 
 export interface UserPromise {
   data: {
@@ -14,8 +17,24 @@ export const getUser = (): Promise<IUser> => {
 };
 
 export const useAuth = () => {
-  return useQuery({
+  const setUser = useAuthStore((state) => state.setUser);
+
+  const auth = useQuery<IUser>({
     queryKey: ["users"],
     queryFn: getUser,
   });
+
+  useEffect(() => {
+    const cachedUser = queryClient.getQueryCache().find({ queryKey: ["users"] })
+      ?.state.data as IUser | null;
+
+    if (cachedUser && auth.isPending) {
+      setUser(cachedUser);
+    }
+    if (auth.isSuccess) {
+      setUser(auth.data);
+    }
+  }, [auth.data, auth.isSuccess]);
+
+  return auth;
 };

@@ -15,11 +15,11 @@ const Tag = ({ children, field }: ITagProps) => {
         width="800"
         height="800"
         fill="none"
+        stroke="currentColor"
         viewBox="0 0 24 24"
         className={SIZE}
       >
         <path
-          stroke="#000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.5"

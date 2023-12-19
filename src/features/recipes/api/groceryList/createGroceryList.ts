@@ -3,7 +3,7 @@ import { ICreateCard, IGroceryList } from "@/types";
 import { queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import useNotificationStore from "@/stores/useNotificationStore";
-import useCardStore from "../../stores/useCardStore";
+import useModalStore from "@/stores/useModalStore";
 
 const createGroceryList = (data: ICreateCard): Promise<IGroceryList> => {
   return axios.post("/grocery-lists", data);
@@ -11,10 +11,10 @@ const createGroceryList = (data: ICreateCard): Promise<IGroceryList> => {
 
 export const useCreateGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { back } = useCardStore();
+  const { resetModals } = useModalStore();
   return useMutation({
     onMutate: async (newGroceryList) => {
-      await queryClient.cancelQueries(["grocery-lists"]);
+      await queryClient.cancelQueries({ queryKey: ["grocery-lists"] });
 
       const previousGroceryLists = queryClient.getQueryData<IGroceryList[]>([
         "grocery-lists",
@@ -24,6 +24,10 @@ export const useCreateGroceryList = () => {
         ["grocery-lists"],
         [...(previousGroceryLists || []), newGroceryList]
       );
+
+      if (!navigator.onLine) {
+        return resetModals();
+      }
 
       return { previousGroceryLists };
     },
@@ -36,12 +40,12 @@ export const useCreateGroceryList = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["grocery-lists"]);
+      queryClient.invalidateQueries({ queryKey: ["grocery-lists"] });
       addNotification({
         isError: false,
         message: "Grocery list created",
       });
-      back();
+      resetModals();
     },
     mutationFn: createGroceryList,
   });

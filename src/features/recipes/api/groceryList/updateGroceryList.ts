@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query";
 import useNotificationStore from "@/stores/useNotificationStore";
 import useCardStore from "../../stores/useCardStore";
+import useModalStore from "@/stores/useModalStore";
 
 const updateGroceryList = (data: IGroceryList): Promise<IGroceryList> => {
   return axios.put(`/grocery-lists/${data.id}`, data);
@@ -15,7 +16,7 @@ export const useUpdateGroceryList = () => {
 
   return useMutation({
     onMutate: async (updatingGroceryList: IGroceryList) => {
-      await queryClient.cancelQueries(["grocery-lists"]);
+      await queryClient.cancelQueries({ queryKey: ["grocery-lists"] });
 
       const previousGroceryLists = queryClient.getQueryData<IGroceryList[]>([
         "grocery-lists",
@@ -31,6 +32,10 @@ export const useUpdateGroceryList = () => {
         ]
       );
 
+      if (!navigator.onLine) {
+        return turnOffEditMode();
+      }
+
       return { previousGroceryLists };
     },
     onError(_, __, context) {
@@ -42,7 +47,7 @@ export const useUpdateGroceryList = () => {
       }
     },
     onSuccess: (card) => {
-      queryClient.invalidateQueries(["grocery-lists"]);
+      queryClient.invalidateQueries({ queryKey: ["grocery-lists"] });
       selectCard(card);
       addNotification({
         isError: false,

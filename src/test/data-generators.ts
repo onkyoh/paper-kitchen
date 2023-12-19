@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export const userGenerator = () => ({
   name: faker.internet.displayName(),
+  email: faker.internet.email(),
   username: faker.string.alphanumeric(15),
   password: faker.internet.password(),
 });

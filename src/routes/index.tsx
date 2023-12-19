@@ -1,65 +1,72 @@
-import { Navigate, useRoutes } from "react-router-dom";
-
-import Main from "../components/Layout/Main";
-import Auth from "../features/auth/routes";
-import Share from "../features/share/routes";
-import GroceryLists from "@/features/recipes/routes/GroceryLists";
-import Recipes from "@/features/recipes/routes/Recipes";
-import { useAuth } from "@/features/auth/api/getUser";
-
-import useAuthStore from "@/features/auth/stores/useAuthStore";
+import { Navigate, useLocation, useRoutes } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const index = () => {
-  const auth = useAuth();
-  const { user, setUser } = useAuthStore();
+import Share from "../features/share/routes";
+import AuthenticateEmail from "@/features/auth/routes/AuthenticateEmail";
+import publicRoutes from "./public";
+import protectedRoutes from "./protected";
 
-  const lastVisited = window.localStorage.getItem("last_visited") as string;
+import { useAuth } from "@/features/auth/api/getUser";
+import useAuthStore from "@/features/auth/stores/useAuthStore";
+
+import {
+  getPreferences,
+  toggleDarkMode,
+} from "@/features/settings/utils/preferences";
+
+const Index = () => {
+  const auth = useAuth();
+  const location = useLocation();
+  const { user } = useAuthStore();
+
+  const [path, setPath] = useState("");
+  const [defaultScreen, setDefaultScreen] = useState("");
 
   useEffect(() => {
-    if (auth.isSuccess) {
-      setUser(auth.data);
+    if (!defaultScreen) {
+      const preferences = getPreferences();
+      setDefaultScreen(preferences.defaultScreen);
+      if (preferences.theme === "dark") {
+        toggleDarkMode();
+      }
     }
-  }, [auth.data, auth.isSuccess]);
+    if (!path) {
+      setPath(location.pathname);
+    } else {
+      setPath("/");
+    }
+  }, [user]);
 
-  const commonRoutes = [{ path: "/join/:url", element: <Share /> }];
+  const commonRoutes = [
+    { path: "/join/:url", element: <Share /> },
+    { path: "/auth/authenticate-email/:url", element: <AuthenticateEmail /> },
+  ];
 
-  const protectedRoutes = [
-    {
-      path: "/",
-      element: <Main />,
-      children: [
+  const routes = user
+    ? [
         {
-          path: "/",
-          element: <Navigate to={lastVisited || "recipes"} replace />,
+          path: "*",
+          element: (
+            <Navigate
+              to={path !== "/" ? path : defaultScreen || "/grocery-lists"}
+              replace
+            />
+          ),
         },
-        { path: "recipes", element: <Recipes /> },
-        { path: "grocery-lists", element: <GroceryLists /> },
-      ],
-    },
-    { path: "*", element: <Navigate to="." /> },
-  ];
+        ...protectedRoutes,
+      ]
+    : publicRoutes;
 
-  const publicRoutes = [
-    {
-      path: "/auth/*",
-      element: <Auth />,
-    },
-    { path: "*", element: <Navigate to="/auth/login" /> },
-  ];
+  const element = useRoutes([...commonRoutes, ...routes]);
 
-  const routes = user ? protectedRoutes : publicRoutes;
-
-  const element = useRoutes([...routes, ...commonRoutes]);
-
-  if (auth.isLoading) {
+  if (auth.isPending) {
     return <LoadingIcon />;
   }
 
   return <>{element}</>;
 };
 
-export default index;
+export default Index;
 
 const LoadingIcon = () => {
   const [text, setText] = useState("");

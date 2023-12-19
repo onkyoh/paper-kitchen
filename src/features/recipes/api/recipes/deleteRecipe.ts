@@ -1,9 +1,10 @@
 import { axios } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
+import useModalStore from "@/stores/useModalStore";
 import useNotificationStore from "@/stores/useNotificationStore";
 import { IInfiniteRecipeQuery } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import useCardStore from "../../stores/useCardStore";
+import { useNavigate } from "react-router-dom";
 
 const deleteRecipe = (id: number): Promise<string> => {
   return axios.delete(`/recipes/${id}`);
@@ -11,10 +12,11 @@ const deleteRecipe = (id: number): Promise<string> => {
 
 export const useDeleteRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const { back } = useCardStore();
+  const { resetModals } = useModalStore();
+  const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedRecipe) => {
-      await queryClient.cancelQueries(["recipes"]);
+      await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<IInfiniteRecipeQuery>([
         "recipes",
@@ -27,6 +29,11 @@ export const useDeleteRecipe = () => {
         pageParams: previousRecipes?.pageParams || [],
       });
 
+      if (!navigator.onLine) {
+        navigate("/recipes");
+        return resetModals();
+      }
+
       return { previousRecipes };
     },
     onError(_, __, context) {
@@ -35,12 +42,12 @@ export const useDeleteRecipe = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["recipes"]);
+      queryClient.invalidateQueries({ queryKey: ["recipes"] });
       addNotification({
         isError: false,
         message: "Recipe deleted",
       });
-      back();
+      navigate("/recipes");
     },
     mutationFn: deleteRecipe,
   });

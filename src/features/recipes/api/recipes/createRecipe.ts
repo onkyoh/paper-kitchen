@@ -11,10 +11,10 @@ const createRecipe = (data: ICreateCard): Promise<IRecipe> => {
 
 export const useCreateRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const resetModals = useModalStore((state) => state.resetModals);
+  const { resetModals } = useModalStore();
   return useMutation({
     onMutate: async (newRecipe) => {
-      await queryClient.cancelQueries(["recipes"]);
+      await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<IInfiniteRecipeQuery>([
         "recipes",
@@ -25,6 +25,10 @@ export const useCreateRecipe = () => {
         pageParams: previousRecipes?.pageParams || [],
       });
 
+      if (!navigator.onLine) {
+        return resetModals();
+      }
+
       return { previousRecipes };
     },
     onError(_, __, context) {
@@ -33,7 +37,7 @@ export const useCreateRecipe = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["recipes"]);
+      queryClient.invalidateQueries({ queryKey: ["recipes"] });
       addNotification({
         isError: false,
         message: "Recipe created",

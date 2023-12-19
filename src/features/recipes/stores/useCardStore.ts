@@ -1,13 +1,11 @@
 import { create } from "zustand";
 import { IGroceryList, IRecipe } from "@/types";
-import useModalStore from "../../../stores/useModalStore";
 
 interface CardStore {
   card: null | IRecipe | IGroceryList;
   isChanged: boolean;
   selectCard: (card: IRecipe | IGroceryList) => void;
   resetIsChanged: () => void;
-  back: () => void;
   updateCard: (updatedFields: Partial<IRecipe> | Partial<IGroceryList>) => void;
   editMode: boolean;
   toggleEditMode: () => void;
@@ -19,12 +17,6 @@ const useCardStore = create<CardStore>((set) => {
     card: null,
     isChanged: false,
     selectCard: (card) => set(() => ({ card })),
-    back: () => {
-      set({ card: null });
-      set({ editMode: false });
-      set({ isChanged: false });
-      useModalStore.getState().resetModals();
-    },
     resetIsChanged: () => {
       set({ isChanged: false });
     },

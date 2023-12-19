@@ -3,7 +3,8 @@ import useNotificationStore from "@/stores/useNotificationStore";
 import { IGroceryList } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
-import useCardStore from "../../stores/useCardStore";
+import { useNavigate } from "react-router-dom";
+import useModalStore from "@/stores/useModalStore";
 
 const deleteGroceryList = (id: number): Promise<string> => {
   return axios.delete(`/grocery-lists/${id}`);
@@ -11,10 +12,11 @@ const deleteGroceryList = (id: number): Promise<string> => {
 
 export const useDeleteGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { back } = useCardStore();
+  const { resetModals } = useModalStore();
+  const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedGroceryList) => {
-      await queryClient.cancelQueries(["grocery-lists"]);
+      await queryClient.cancelQueries({ queryKey: ["grocery-lists"] });
 
       const previousGroceryLists = queryClient.getQueryData<IGroceryList[]>([
         "grocery-lists",
@@ -27,6 +29,11 @@ export const useDeleteGroceryList = () => {
         )
       );
 
+      if (!navigator.onLine) {
+        navigate("/grocery-lists");
+        return resetModals();
+      }
+
       return { previousGroceryLists };
     },
     onError(_, __, context) {
@@ -38,12 +45,12 @@ export const useDeleteGroceryList = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["grocery-lists"]);
+      queryClient.invalidateQueries({ queryKey: ["grocery-lists"] });
       addNotification({
         isError: false,
         message: "Grocery list deleted",
       });
-      back();
+      navigate("/grocery-lists");
     },
     mutationFn: deleteGroceryList,
   });
