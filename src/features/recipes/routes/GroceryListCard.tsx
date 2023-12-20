@@ -12,6 +12,7 @@ import DeleteCard from "../components/Forms/DeleteCard";
 import LeaveForm from "../components/Forms/LeaveForm";
 
 import useCardStore from "../stores/useCardStore";
+
 import useStriking from "../hooks/useStriking";
 
 import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
@@ -77,15 +78,15 @@ const GroceryListCard = () => {
         ownerId={card.ownerId}
         cardId={card.id}
         toggleEditMode={toggleEditMode}
-        updateFn={() => updateGroceryList.mutateAsync(card)}
+        updateFn={async () => await updateGroceryList.mutateAsync(card)}
         path="grocery-lists"
       >
         <div className="flex justify-between">
           <Title editMode={editMode} title={card.title} />
           {!editMode && (
             <Button
-              onClick={() =>
-                updateGroceryList.mutateAsync({
+              onClick={async () =>
+                await updateGroceryList.mutateAsync({
                   ...card,
                   ingredients: card.ingredients.filter(
                     (ingredient) => strikedArray.indexOf(ingredient.id) === -1

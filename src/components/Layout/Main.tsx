@@ -128,9 +128,7 @@ const Main = () => {
               </svg>
             </Button>
           </li>
-          <li
-            className={location.pathname === "/grocery-lists" ? "hidden" : ""}
-          >
+          <li className={location.pathname !== "/recipes" ? "hidden" : ""}>
             <FilterButton />
           </li>
           <li className="flex items-center justify-center">

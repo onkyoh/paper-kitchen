@@ -4,6 +4,7 @@ import Header from "@/components/Elements/Header";
 import storage from "@/utils/storage";
 import useAuthStore from "../stores/useAuthStore";
 import useModalStore from "@/stores/useModalStore";
+import { queryClient } from "@/lib/react-query";
 
 const Logout = () => {
   const { setUser } = useAuthStore();
@@ -13,6 +14,7 @@ const Logout = () => {
     setUser(null);
     toggleOpen("logout");
     storage.clearToken();
+    queryClient.clear();
   };
 
   return (

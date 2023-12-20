@@ -13,7 +13,7 @@ const getPermissions = (path: string, id: number): Promise<Users[]> => {
 
 export const usePermissionsList = (path: string, id: number) => {
   return useQuery({
-    queryKey: ["permissions"],
+    queryKey: ["permissions", path, id],
     queryFn: () => getPermissions(path, id),
   });
 };

@@ -18,7 +18,8 @@ const Permissions = ({ path, id }: IPermissionsProps) => {
   const { editingIds, handleEdit, deletingIds, handleDelete } =
     usePermissions();
 
-  if (permissionsList.isPending) return <Spinner />;
+  if (permissionsList.isPending && !permissionsList.isPaused)
+    return <Spinner />;
 
   return (
     <Form
@@ -31,31 +32,32 @@ const Permissions = ({ path, id }: IPermissionsProps) => {
       <Header>Permissions List</Header>
       <ul className="w-full">
         {permissionsList.data && permissionsList.data?.length > 0 ? (
-          permissionsList.data.map((user) => (
-            <li className="flex w-full items-center gap-2" key={user.userId}>
+          permissionsList.data.map((guest) => (
+            <li className="flex w-full items-center gap-2" key={guest.userId}>
               <p
-                key={user.userId}
+                key={guest.userId}
                 className={`flex-grow ${
-                  deletingIds.includes(user.userId) ? "line-through" : ""
+                  deletingIds.includes(guest.userId) ? "line-through" : ""
                 }`}
               >
-                {user.name}
+                {guest.name}
               </p>
               <select
                 name="permissions"
                 id="permissions"
                 value={
-                  user.canEdit || editingIds.includes(user.userId)
+                  (guest.canEdit && !editingIds.includes(guest.userId)) ||
+                  (!guest.canEdit && editingIds.includes(guest.userId))
                     ? "editor"
                     : "viewer"
                 }
-                onChange={() => handleEdit(user.userId)}
+                onChange={() => handleEdit(guest.userId)}
               >
                 <option value="editor">Editor</option>
                 <option value="viewer">Viewer</option>
               </select>
 
-              <Button onClick={() => handleDelete(user.userId)} type="button">
+              <Button onClick={() => handleDelete(guest.userId)} type="button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

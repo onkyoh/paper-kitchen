@@ -17,7 +17,16 @@ export const getUser = (): Promise<IUser> => {
 };
 
 export const useAuth = () => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const { user, setUser } = useAuthStore();
+
+  const cachedUser = queryClient.getQueryCache().find({ queryKey: ["users"] })
+    ?.state.data as IUser | null;
+
+  useEffect(() => {
+    if (cachedUser && !user) {
+      setUser(cachedUser);
+    }
+  }, [cachedUser, user, setUser]);
 
   const auth = useQuery<IUser>({
     queryKey: ["users"],
@@ -25,16 +34,10 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    const cachedUser = queryClient.getQueryCache().find({ queryKey: ["users"] })
-      ?.state.data as IUser | null;
-
-    if (cachedUser && auth.isPending) {
-      setUser(cachedUser);
-    }
     if (auth.isSuccess) {
       setUser(auth.data);
     }
-  }, [auth.data, auth.isSuccess]);
+  }, [auth.isSuccess]);
 
   return auth;
 };

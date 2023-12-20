@@ -23,6 +23,7 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    if (!navigator.onLine) return;
     const message = error.response?.data || error.message;
     useNotificationStore.getState().addNotification({
       isError: true,

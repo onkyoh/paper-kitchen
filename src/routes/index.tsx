@@ -27,13 +27,11 @@ const Index = () => {
       const preferences = getPreferences();
       setDefaultScreen(preferences.defaultScreen);
       if (preferences.theme === "dark") {
-        toggleDarkMode();
+        toggleDarkMode("dark");
       }
     }
     if (!path) {
       setPath(location.pathname);
-    } else {
-      setPath("/");
     }
   }, [user]);
 

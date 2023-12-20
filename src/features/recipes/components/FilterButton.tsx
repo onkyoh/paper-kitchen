@@ -12,7 +12,7 @@ const FilterButton = () => {
         <Button
           onClick={() => toggleOpen("filter")}
           aria-label="open filter"
-          className="border-2 border-dashed border-black bg-white"
+          className="border-2 border-dashed border-black bg-white md:border-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
