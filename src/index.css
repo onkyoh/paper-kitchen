@@ -66,6 +66,18 @@ body {
   accent-color: #5b5b5b;
 }
 
+.dark .hover\:bg-gray-300:hover {
+  background-color: #5b5b5b; /* Darker color for dark mode */
+}
+
+.dark .md\:border-black {
+  border-color: #fff;
+}
+
+.dark select {
+  background-color: #5b5b5b;
+}
+
 .dark {
   color: #fff;
 }

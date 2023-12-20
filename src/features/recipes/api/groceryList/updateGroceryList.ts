@@ -4,7 +4,6 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query";
 import useNotificationStore from "@/stores/useNotificationStore";
 import useCardStore from "../../stores/useCardStore";
-import useModalStore from "@/stores/useModalStore";
 
 const updateGroceryList = (data: IGroceryList): Promise<IGroceryList> => {
   return axios.put(`/grocery-lists/${data.id}`, data);
@@ -33,6 +32,7 @@ export const useUpdateGroceryList = () => {
       );
 
       if (!navigator.onLine) {
+        selectCard(updatingGroceryList);
         return turnOffEditMode();
       }
 

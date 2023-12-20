@@ -16,7 +16,9 @@ const Preferences = () => {
     value: string
   ) => {
     const newPreferences = { ...preferences, [key]: value };
-    if (key === "theme") toggleDarkMode();
+    if (key === "theme") {
+      toggleDarkMode(value);
+    }
     setPreferences(newPreferences);
     updatePreferences(newPreferences);
   };

@@ -20,8 +20,8 @@ interface IIngredientItemProps {
 export default function IngredientList({
   ingredients,
   editMode,
-  strikedArray,
-  handleStrike,
+  strikedArray = [],
+  handleStrike = () => {},
 }: IIngredientListProps) {
   const {
     newIngredient,
@@ -34,7 +34,7 @@ export default function IngredientList({
   return (
     <ul className="flex flex-col-reverse">
       {ingredients.map((ingredient) =>
-        !editMode && strikedArray && handleStrike ? (
+        !editMode ? (
           <IngredientItem
             ingredient={ingredient}
             key={ingredient.id}

@@ -26,8 +26,12 @@ export const getPreferenceByKey = (key: keyof Preferences): string => {
   return preferences[key];
 };
 
-export const toggleDarkMode = () => {
-  document.body.classList.toggle("dark");
+export const toggleDarkMode = (theme: string) => {
+  if (theme) {
+    document.body.classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+  }
 };
 
 export const updatePreferences = (newPreferences: Preferences) => {
