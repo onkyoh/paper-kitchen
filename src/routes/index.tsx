@@ -1,5 +1,5 @@
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import Share from "../features/share/routes";
 import AuthenticateEmail from "@/features/auth/routes/AuthenticateEmail";
@@ -46,7 +46,11 @@ const Index = () => {
           path: "*",
           element: (
             <Navigate
-              to={path !== "/" ? path : defaultScreen || "/grocery-lists"}
+              to={
+                path !== "/" && !path.includes("auth")
+                  ? path
+                  : defaultScreen || "/grocery-lists"
+              }
               replace
             />
           ),
