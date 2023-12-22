@@ -24,10 +24,10 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    if (auth.isSuccess) {
+    if (auth.data) {
       setUser(auth.data);
     }
-  }, [auth.isSuccess]);
+  }, [auth.data]);
 
   return auth;
 };
