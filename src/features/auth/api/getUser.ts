@@ -21,6 +21,7 @@ export const useAuth = () => {
   const auth = useQuery<IUser>({
     queryKey: ["users"],
     queryFn: getUser,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
