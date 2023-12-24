@@ -8,9 +8,6 @@ function App() {
     <PersistQueryClientProvider
       client={queryClient}
       persistOptions={{ persister: localStoragePersister }}
-      onSuccess={() => {
-        queryClient.resumePausedMutations();
-      }}
     >
       <BrowserRouter>
         <Routes />

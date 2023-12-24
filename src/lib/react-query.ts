@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { removeOldestQuery } from "@tanstack/react-query-persist-client";
+import { compress, decompress } from "lz-string";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -9,6 +9,7 @@ const queryClient = new QueryClient({
       retry: 0,
       staleTime: 5 * 60 * 1000,
       gcTime: Infinity,
+      networkMode: "offlineFirst",
     },
   },
 });
@@ -16,6 +17,8 @@ const queryClient = new QueryClient({
 const localStoragePersister = createSyncStoragePersister({
   key: "paperkitchen_cache",
   storage: window.localStorage,
+  serialize: (data) => compress(JSON.stringify(data)),
+  deserialize: (data) => JSON.parse(decompress(data)),
 });
 
 export { queryClient, localStoragePersister };
