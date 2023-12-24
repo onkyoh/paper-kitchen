@@ -2,6 +2,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { queryClient, localStoragePersister } from "./lib/react-query";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
+import { PersistGate } from "./components/Layout/PersistGate";
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
           .then(() => queryClient.invalidateQueries())
       }
     >
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <PersistGate>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </PersistGate>
     </PersistQueryClientProvider>
   );
 }
