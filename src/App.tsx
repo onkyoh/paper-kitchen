@@ -7,7 +7,15 @@ function App() {
   return (
     <PersistQueryClientProvider
       client={queryClient}
-      persistOptions={{ persister: localStoragePersister }}
+      persistOptions={{
+        persister: localStoragePersister,
+        maxAge: Infinity,
+      }}
+      onSuccess={() =>
+        queryClient
+          .resumePausedMutations()
+          .then(() => queryClient.invalidateQueries())
+      }
     >
       <BrowserRouter>
         <Routes />
