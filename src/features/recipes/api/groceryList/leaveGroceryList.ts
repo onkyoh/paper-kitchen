@@ -32,7 +32,7 @@ export const useLeaveGroceryList = () => {
 
       if (!navigator.onLine) {
         navigate("/grocery-lists");
-        return resetModals();
+        resetModals();
       }
 
       return { previousGroceryLists };

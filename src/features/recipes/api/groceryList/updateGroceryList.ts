@@ -33,7 +33,7 @@ export const useUpdateGroceryList = () => {
 
       if (!navigator.onLine) {
         selectCard(updatingGroceryList);
-        return turnOffEditMode();
+        turnOffEditMode();
       }
 
       return { previousGroceryLists };

@@ -31,7 +31,7 @@ export const useDeleteRecipe = () => {
 
       if (!navigator.onLine) {
         navigate("/recipes");
-        return resetModals();
+        resetModals();
       }
 
       return { previousRecipes };

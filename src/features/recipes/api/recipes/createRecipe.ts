@@ -26,7 +26,7 @@ export const useCreateRecipe = () => {
       });
 
       if (!navigator.onLine) {
-        return resetModals();
+        resetModals();
       }
 
       return { previousRecipes };
