@@ -24,17 +24,14 @@ export const useAuth = () => {
   const auth = useQuery<IUser>({
     queryKey: ["users"],
     queryFn: getUser,
-    staleTime: Infinity,
   });
 
   useEffect(() => {
-    if (auth.data) {
-      setUser(auth.data);
-      if (location.pathname.includes("/auth/")) {
-        navigate("/grocery-lists");
-      }
+    setUser(auth.data ?? null);
+    if (location.pathname.includes("/auth/")) {
+      navigate("/grocery-lists");
     }
-  }, [auth.data]);
+  }, [auth.status]);
 
   return auth;
 };

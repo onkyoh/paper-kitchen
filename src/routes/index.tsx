@@ -1,5 +1,5 @@
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 import Share from "../features/share/routes";
 import AuthenticateEmail from "@/features/auth/routes/AuthenticateEmail";
@@ -22,7 +22,9 @@ const Index = () => {
   const [path, setPath] = useState("");
   const [defaultScreen, setDefaultScreen] = useState("");
 
+  //if path is / = normal app open we go to preferences
   useEffect(() => {
+    console.log(user, auth.data, location.pathname);
     if (!defaultScreen) {
       const preferences = getPreferences();
       setDefaultScreen(preferences.defaultScreen);
@@ -33,7 +35,7 @@ const Index = () => {
     if (!path) {
       setPath(location.pathname);
     }
-  }, [user]);
+  }, []);
 
   const commonRoutes = [
     { path: "/join/:url", element: <Share /> },
