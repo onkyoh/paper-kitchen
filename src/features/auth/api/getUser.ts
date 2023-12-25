@@ -4,13 +4,7 @@ import { axios } from "@/lib/axios";
 import useAuthStore from "../stores/useAuthStore";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-export interface UserPromise {
-  data: {
-    user: IUser;
-    token: string;
-  };
-}
+import { queryClient } from "@/lib/react-query";
 
 export const getUser = (): Promise<IUser> => {
   return axios.get("/users");
@@ -24,10 +18,13 @@ export const useAuth = () => {
   const auth = useQuery<IUser>({
     queryKey: ["users"],
     queryFn: getUser,
+    staleTime: Infinity,
+    networkMode: "always",
+    initialData: queryClient.getQueryData<IUser>(["users"]),
   });
 
   useEffect(() => {
-    setUser(auth.data ?? null);
+    setUser(auth.data ?? queryClient.getQueryData<IUser>(["users"]) ?? null);
     if (location.pathname.includes("/auth/")) {
       navigate("/grocery-lists");
     }
