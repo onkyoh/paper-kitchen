@@ -24,7 +24,6 @@ const Index = () => {
 
   //if path is / = normal app open we go to preferences
   useEffect(() => {
-    console.log(user, auth.data, location.pathname);
     if (!defaultScreen) {
       const preferences = getPreferences();
       setDefaultScreen(preferences.defaultScreen);

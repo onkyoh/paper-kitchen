@@ -10,6 +10,7 @@ const queryClient = new QueryClient({
       staleTime: 5 * 60 * 1000,
       gcTime: Infinity,
       networkMode: "offlineFirst",
+      enabled: navigator.onLine,
     },
   },
 });
