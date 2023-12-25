@@ -12,6 +12,9 @@ function App() {
         persister: localStoragePersister,
         maxAge: Infinity,
       }}
+      onSuccess={() => {
+        queryClient.resumePausedMutations();
+      }}
     >
       <PersistGate>
         <BrowserRouter>
