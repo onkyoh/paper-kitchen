@@ -32,7 +32,7 @@ export const useUpdatePermissions = () => {
       queryClient.setQueryData(queryKey, newPermissions);
 
       if (!navigator.onLine) {
-        return resetModals();
+        resetModals();
       }
 
       return { previousPermissions, queryKey };

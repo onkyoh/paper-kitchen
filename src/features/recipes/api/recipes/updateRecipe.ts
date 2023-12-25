@@ -29,7 +29,7 @@ export const useUpdateRecipe = () => {
 
       if (!navigator.onLine) {
         selectCard(updatingRecipe);
-        return turnOffEditMode();
+        turnOffEditMode();
       }
 
       return { previousRecipes };

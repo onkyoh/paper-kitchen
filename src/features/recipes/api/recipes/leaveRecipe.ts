@@ -32,7 +32,7 @@ export const useLeaveRecipe = () => {
 
       if (!navigator.onLine) {
         navigate("/recipes");
-        return resetModals();
+        resetModals();
       }
 
       return { previousRecipes };

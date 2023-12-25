@@ -26,7 +26,7 @@ export const useCreateGroceryList = () => {
       );
 
       if (!navigator.onLine) {
-        return resetModals();
+        resetModals();
       }
 
       return { previousGroceryLists };
