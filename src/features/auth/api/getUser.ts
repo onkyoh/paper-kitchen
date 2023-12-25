@@ -24,7 +24,10 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    setUser(auth.data ?? queryClient.getQueryData<IUser>(["users"]) ?? null);
+    if (auth.data) {
+      setUser(auth.data);
+    }
+
     if (location.pathname.includes("/auth/")) {
       navigate("/grocery-lists");
     }
