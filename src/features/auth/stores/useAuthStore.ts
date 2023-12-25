@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
+import { persist, PersistOptions } from "zustand/middleware";
 import { IUser } from "@/types";
 
 interface AuthStore {
@@ -6,11 +7,23 @@ interface AuthStore {
   setUser: (user: IUser | null) => void;
 }
 
-const useAuthStore = create<AuthStore>((set) => ({
-  user: null,
-  setUser: (user) => {
-    set({ user });
-  },
-}));
+type MyPersist = (
+  config: StateCreator<AuthStore>,
+  options: PersistOptions<AuthStore>
+) => StateCreator<AuthStore>;
+
+const useAuthStore = create<AuthStore, []>(
+  (persist as MyPersist)(
+    (set) => ({
+      user: null,
+      setUser: (user) => {
+        set({ user });
+      },
+    }),
+    {
+      name: "paperkitchen-auth",
+    }
+  )
+);
 
 export default useAuthStore;

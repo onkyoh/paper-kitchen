@@ -1,19 +1,6 @@
-import { QueryClient, onlineManager } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { compress, decompress } from "lz-string";
-
-// Setup OnlineManager to listen for network changes
-onlineManager.setEventListener((setOnline) => {
-  // Subscribe to online/offline events
-  window.addEventListener("online", () => setOnline(true));
-  window.addEventListener("offline", () => setOnline(false));
-
-  // Return a cleanup function
-  return () => {
-    window.removeEventListener("online", () => setOnline(true));
-    window.removeEventListener("offline", () => setOnline(false));
-  };
-});
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +9,6 @@ const queryClient = new QueryClient({
       retry: 0,
       staleTime: 5 * 60 * 1000,
       gcTime: Infinity,
-      networkMode: "offlineFirst",
     },
   },
 });
