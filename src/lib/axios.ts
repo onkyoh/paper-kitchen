@@ -23,7 +23,12 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (!navigator.onLine) return;
+    if (!navigator.onLine) {
+      useNotificationStore.getState().addNotification({
+        isError: true,
+        message: "Internet Connection Required",
+      });
+    }
     const message = error.response?.data || error.message;
     useNotificationStore.getState().addNotification({
       isError: true,

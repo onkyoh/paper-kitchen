@@ -31,14 +31,9 @@ export const useUpdatePermissions = () => {
 
       queryClient.setQueryData(queryKey, newPermissions);
 
-      if (!navigator.onLine) {
-        resetModals();
-      }
-
       return { previousPermissions, queryKey };
     },
     onError: (_, __, context) => {
-      // Rollback to previous permissions on error
       if (context?.previousPermissions) {
         queryClient.setQueryData(context.queryKey, context.previousPermissions);
       }

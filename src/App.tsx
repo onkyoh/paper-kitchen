@@ -1,27 +1,15 @@
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { queryClient, localStoragePersister } from "./lib/react-query";
+import { queryClient } from "./lib/react-query";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
-import { PersistGate } from "./components/Layout/PersistGate";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
   return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister: localStoragePersister,
-        maxAge: Infinity,
-      }}
-      onSuccess={() => {
-        queryClient.resumePausedMutations();
-      }}
-    >
-      <PersistGate>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </PersistGate>
-    </PersistQueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

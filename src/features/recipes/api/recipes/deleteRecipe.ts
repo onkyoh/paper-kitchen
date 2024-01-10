@@ -1,6 +1,5 @@
 import { axios } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
-import useModalStore from "@/stores/useModalStore";
 import useNotificationStore from "@/stores/useNotificationStore";
 import { IInfiniteRecipeQuery } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -12,7 +11,6 @@ const deleteRecipe = (id: number): Promise<string> => {
 
 export const useDeleteRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const { resetModals } = useModalStore();
   const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedRecipe) => {
@@ -28,11 +26,6 @@ export const useDeleteRecipe = () => {
         ),
         pageParams: previousRecipes?.pageParams || [],
       });
-
-      if (!navigator.onLine) {
-        navigate("/recipes");
-        resetModals();
-      }
 
       return { previousRecipes };
     },

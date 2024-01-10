@@ -25,10 +25,6 @@ export const useCreateRecipe = () => {
         pageParams: previousRecipes?.pageParams || [],
       });
 
-      if (!navigator.onLine) {
-        resetModals();
-      }
-
       return { previousRecipes };
     },
     onError(_, __, context) {
