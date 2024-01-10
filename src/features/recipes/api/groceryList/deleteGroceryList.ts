@@ -12,7 +12,6 @@ const deleteGroceryList = (id: number): Promise<string> => {
 
 export const useDeleteGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { resetModals } = useModalStore();
   const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedGroceryList) => {
@@ -28,11 +27,6 @@ export const useDeleteGroceryList = () => {
           (groceryList) => groceryList.id !== deletedGroceryList
         )
       );
-
-      if (!navigator.onLine) {
-        navigate("/grocery-lists");
-        resetModals();
-      }
 
       return { previousGroceryLists };
     },

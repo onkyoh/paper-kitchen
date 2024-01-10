@@ -25,10 +25,6 @@ export const useCreateGroceryList = () => {
         [...(previousGroceryLists || []), newGroceryList]
       );
 
-      if (!navigator.onLine) {
-        resetModals();
-      }
-
       return { previousGroceryLists };
     },
     onError(_, __, context) {

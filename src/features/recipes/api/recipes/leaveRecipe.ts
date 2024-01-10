@@ -5,7 +5,6 @@ import { IInfiniteRecipeQuery } from "@/types";
 
 import useNotificationStore from "@/stores/useNotificationStore";
 import { useNavigate } from "react-router-dom";
-import useModalStore from "@/stores/useModalStore";
 
 const leaveRecipe = (id: number): Promise<string> => {
   return axios.delete(`/recipes/${id}/permissions`);
@@ -13,7 +12,6 @@ const leaveRecipe = (id: number): Promise<string> => {
 
 export const useLeaveRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const { resetModals } = useModalStore();
   const navigate = useNavigate();
   return useMutation({
     onMutate: async (deletedRecipe) => {
@@ -29,11 +27,6 @@ export const useLeaveRecipe = () => {
         ),
         pageParams: previousRecipes?.pageParams || [],
       });
-
-      if (!navigator.onLine) {
-        navigate("/recipes");
-        resetModals();
-      }
 
       return { previousRecipes };
     },

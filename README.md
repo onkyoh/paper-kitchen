@@ -8,7 +8,6 @@ Try it now here: [paperkitchen.ca](https://paperkitchen.ca).
 
 During the holidays I decided to make some improvements to PaperKitchen. After a few weeks of brainstorming, developing, and testing I successfully implemented the following updates:
 
-- **PWA:** By adding a service worker and utilizing TanStackQuery's `PersistedQueryClientProvider` PaperKitchen met the requirements to be a PWA. This means users can install PaperKitchen on their devices for a native feel, and more importantly the app has offline functionality.
 - **Email:** I incorporated AWS Simple Email Service to allow users to attach emails to their account. This is mainly incase they forget their password and need to reset it (which I also enabled).
 - **Settings:** There is now a settings tab, here users can see the personal information attached to their account and set some default preferences. The main benefits of this is handling email authentication and allowing users to toggle between light and dark mode.
 - **Dedicated Card Routes:** Previously there was no `react-router` navigation for individual grocery lists and recipes. I decided to change this and add dedicated routes for individual resources. This means users can directly enter the url of a resource they wish to view directly.

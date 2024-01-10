@@ -11,7 +11,7 @@ const updateRecipe = (data: IRecipe): Promise<IRecipe> => {
 
 export const useUpdateRecipe = () => {
   const { addNotification } = useNotificationStore();
-  const { turnOffEditMode, selectCard } = useCardStore();
+  const { turnOffEditMode } = useCardStore();
   return useMutation({
     onMutate: async (updatingRecipe: IRecipe) => {
       await queryClient.cancelQueries({ queryKey: ["recipes"] });
@@ -26,11 +26,6 @@ export const useUpdateRecipe = () => {
         ),
         pageParams: previousRecipes?.pageParams || [],
       });
-
-      if (!navigator.onLine) {
-        selectCard(updatingRecipe);
-        turnOffEditMode();
-      }
 
       return { previousRecipes };
     },

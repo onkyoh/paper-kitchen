@@ -4,7 +4,6 @@ import useNotificationStore from "@/stores/useNotificationStore";
 import { useMutation } from "@tanstack/react-query";
 import { IGroceryList } from "@/types";
 import { useNavigate } from "react-router-dom";
-import useModalStore from "@/stores/useModalStore";
 
 const leaveGroceryList = (id: number): Promise<string> => {
   return axios.delete(`/grocery-lists/${id}/permissions`);
@@ -12,7 +11,6 @@ const leaveGroceryList = (id: number): Promise<string> => {
 
 export const useLeaveGroceryList = () => {
   const { addNotification } = useNotificationStore();
-  const { resetModals } = useModalStore();
   const navigate = useNavigate();
 
   return useMutation({
@@ -29,11 +27,6 @@ export const useLeaveGroceryList = () => {
           (groceryList) => groceryList.id !== deletedGroceryList
         )
       );
-
-      if (!navigator.onLine) {
-        navigate("/grocery-lists");
-        resetModals();
-      }
 
       return { previousGroceryLists };
     },

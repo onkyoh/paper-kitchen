@@ -31,11 +31,6 @@ export const useUpdateGroceryList = () => {
         ]
       );
 
-      if (!navigator.onLine) {
-        selectCard(updatingGroceryList);
-        turnOffEditMode();
-      }
-
       return { previousGroceryLists };
     },
     onError(_, __, context) {
