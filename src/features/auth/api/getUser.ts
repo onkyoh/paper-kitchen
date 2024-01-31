@@ -10,7 +10,7 @@ export const getUser = (): Promise<IUser> => {
 };
 
 export const useAuth = () => {
-  const { user, setUser } = useAuthStore();
+  const { setUser } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -20,8 +20,7 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    if (!auth?.data?.id) return;
-    if (auth.data.id !== user?.id) {
+    if (auth.data) {
       setUser(auth.data);
     }
 
