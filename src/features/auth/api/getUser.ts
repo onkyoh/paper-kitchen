@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const getUser = (): Promise<IUser> => {
-  return axios.get("/users");
+  return axios.get("/users", { timeout: 5000 });
 };
 
 export const useAuth = () => {
