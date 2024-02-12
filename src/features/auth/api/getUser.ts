@@ -24,10 +24,6 @@ export const useAuth = () => {
     if (auth.data) {
       setUser(auth.data);
     }
-
-    if (location.pathname.includes("/auth/")) {
-      navigate("/grocery-lists");
-    }
   }, [auth.isSuccess]);
 
   return auth;
