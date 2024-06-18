@@ -13,4 +13,4 @@ export const WEBSITE_URL =
   import.meta.env.VITE_WEBSITE_URL || "https://paperkitchen.ca";
 
 export const API_URL =
-  import.meta.env.VITE_API_URL || "https://paperkitchen.adaptable.app/api";
+  import.meta.env.VITE_API_URL || "https://api.paperkitchen.ca/api";

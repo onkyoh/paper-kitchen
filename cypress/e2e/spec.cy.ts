@@ -18,7 +18,7 @@ describe("paperkitchen", () => {
 
     //registration
 
-    cy.visit("http://127.0.0.1:5173/");
+    cy.visit("http://localhost:5173/");
 
     cy.contains("a", /Need an account?/i).click();
 
@@ -31,11 +31,11 @@ describe("paperkitchen", () => {
 
     //logout
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
 
     cy.get('a[aria-label="to settings"]').click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/settings/information");
+    cy.url().should("eq", "http://localhost:5173/settings/information");
 
     cy.contains("button", /logout/i).click();
 
@@ -43,11 +43,11 @@ describe("paperkitchen", () => {
 
     //forgot password
 
-    cy.url().should("eq", "http://127.0.0.1:5173/auth/login");
+    cy.url().should("eq", "http://localhost:5173/auth/login");
 
     cy.contains("a", /Forgot your password?/i).click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/auth/forgot-password");
+    cy.url().should("eq", "http://localhost:5173/auth/forgot-password");
 
     cy.get("input").eq(0).type("adnanradwan_8@hotmail.com");
 
@@ -59,21 +59,21 @@ describe("paperkitchen", () => {
     ).should("exist");
 
     //login
-    cy.visit("http://127.0.0.1:5173/");
+    cy.visit("http://localhost:5173/");
 
     cy.get("input").eq(0).type(user.username);
     cy.get("input").eq(1).type(user.password);
 
     cy.get("button").click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
   });
 
   it("tests recipe functionality", () => {
     const user = userGenerator();
     const title = titleGenerator();
 
-    cy.visit("http://127.0.0.1:5173/auth/register");
+    cy.visit("http://localhost:5173/auth/register");
 
     cy.get("input").eq(0).type(user.name);
     cy.get("input").eq(1).type(user.email);
@@ -82,7 +82,7 @@ describe("paperkitchen", () => {
 
     cy.get("button").click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
 
     //create new
 
@@ -159,7 +159,7 @@ describe("paperkitchen", () => {
 
     cy.get('button[aria-label="submit delete"]').click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
 
     cy.checkAndDismissNotification();
 
@@ -208,7 +208,7 @@ describe("paperkitchen", () => {
     const user = userGenerator();
     const title = titleGenerator();
 
-    cy.visit("http://127.0.0.1:5173/auth/register");
+    cy.visit("http://localhost:5173/auth/register");
 
     cy.get("input").eq(0).type(user.name);
     cy.get("input").eq(1).type(user.email);
@@ -217,7 +217,7 @@ describe("paperkitchen", () => {
 
     cy.get("button").click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
 
     cy.get('button[aria-label="create new"]').click();
 
@@ -244,7 +244,7 @@ describe("paperkitchen", () => {
 
       cy.clearLocalStorage();
 
-      cy.visit(`http://127.0.0.1:5173/join/${url}`);
+      cy.visit(`http://localhost:5173/join/${url}`);
 
       cy.contains("h3", title).should("exist");
       cy.contains("a", /login to join/i).should("exist");
@@ -256,7 +256,7 @@ describe("paperkitchen", () => {
     const user = userGenerator();
     const newUser = userGenerator();
 
-    cy.visit("http://127.0.0.1:5173/auth/register");
+    cy.visit("http://localhost:5173/auth/register");
 
     cy.get("input").eq(0).type(user.name);
     cy.get("input").eq(1).type(user.email);
@@ -265,11 +265,11 @@ describe("paperkitchen", () => {
 
     cy.get("button").click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/recipes");
+    cy.url().should("eq", "http://localhost:5173/recipes");
 
     cy.get('a[aria-label="to settings"]').click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/settings/information");
+    cy.url().should("eq", "http://localhost:5173/settings/information");
 
     cy.contains("p", `Email sent to: ${user.email}`);
 
@@ -291,7 +291,7 @@ describe("paperkitchen", () => {
 
     cy.contains("a", /preferences/i).click();
 
-    cy.url().should("eq", "http://127.0.0.1:5173/settings/preferences");
+    cy.url().should("eq", "http://localhost:5173/settings/preferences");
 
     cy.get("body").should("have.css", "color", "rgb(0, 0, 0)");
 
