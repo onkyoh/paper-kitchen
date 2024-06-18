@@ -14,7 +14,7 @@ export interface IQueryParams {
 
 export type FilterParams = Omit<IQueryParams, "page">;
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 25;
 
 const getRecipes = (queryParams: IQueryParams): Promise<IRecipe[]> => {
   return axios.get("/recipes", {
