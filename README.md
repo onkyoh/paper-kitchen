@@ -23,7 +23,7 @@ During the holidays I decided to make some improvements to PaperKitchen. After a
 ## Technologies
 
 - Frontend constructed with React + Typescript.
-- Backend RestAPI made with Express.js.
+- Backend RestAPI made with Express.js hosted on AWS EC2.
 - PostgreSQL database with Prisma as ORM.
 - React-Router for multi-page utility.
 - TailwindCSS for styling.
