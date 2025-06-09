@@ -2,4 +2,4 @@ export const BACKGROUND_COLORS = ["bg-red-400", "bg-blue-400", "bg-green-400", "
 
 export const WEBSITE_URL = import.meta.env.VITE_WEBSITE_URL || "https://paperkitchen.ca";
 
-export const API_URL = import.meta.env.VITE_API_URL || "https://api.paperkitchen.ca";
+export const API_URL = import.meta.env.VITE_API_URL || "https://api.paperkitchen.ca/api";
